@@ -1,6 +1,10 @@
-import OpenAI from 'openai';
-import { GoogleCalendarClient } from './google-calendar';
-import { ChatCalendarContext, SuggestedAction, ChatMessage } from '@/types/chat';
+import OpenAI from "openai";
+import { GoogleCalendarClient } from "./google-calendar";
+import {
+  ChatCalendarContext,
+  SuggestedAction,
+  ChatMessage,
+} from "@/types/chat";
 
 export class CalendarAIService {
   private openai: OpenAI;
@@ -15,7 +19,7 @@ export class CalendarAIService {
     message: string,
     accessToken: string,
     conversationHistory: ChatMessage[] = [],
-    includeCalendarContext: boolean = true
+    includeCalendarContext: boolean = true,
   ): Promise<{
     response: string;
     calendarContext?: ChatCalendarContext;
@@ -34,20 +38,25 @@ export class CalendarAIService {
       systemPrompt,
       conversationHistory,
       message,
-      calendarContext
+      calendarContext,
     );
 
     try {
       const completion = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: "gpt-4-turbo-preview",
         messages,
         temperature: 0.7,
         max_tokens: 1000,
         stream: false,
       });
 
-      const response = completion.choices[0]?.message?.content || 'I apologize, but I encountered an error processing your message.';
-      const suggestedActions = this.generateSuggestedActions(message, calendarContext);
+      const response =
+        completion.choices[0]?.message?.content ||
+        "I apologize, but I encountered an error processing your message.";
+      const suggestedActions = this.generateSuggestedActions(
+        message,
+        calendarContext,
+      );
 
       return {
         response,
@@ -55,8 +64,8 @@ export class CalendarAIService {
         suggestedActions,
       };
     } catch (error) {
-      console.error('OpenAI API error:', error);
-      throw new Error('Failed to process message with AI');
+      console.error("OpenAI API error:", error);
+      throw new Error("Failed to process message with AI");
     }
   }
 
@@ -64,7 +73,7 @@ export class CalendarAIService {
     message: string,
     accessToken: string,
     conversationHistory: ChatMessage[] = [],
-    includeCalendarContext: boolean = true
+    includeCalendarContext: boolean = true,
   ): Promise<AsyncIterable<string>> {
     let calendarContext: ChatCalendarContext | undefined;
 
@@ -77,12 +86,12 @@ export class CalendarAIService {
       systemPrompt,
       conversationHistory,
       message,
-      calendarContext
+      calendarContext,
     );
 
     try {
       const stream = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: "gpt-4-turbo-preview",
         messages,
         temperature: 0.7,
         max_tokens: 1000,
@@ -91,12 +100,14 @@ export class CalendarAIService {
 
       return this.createStreamIterator(stream);
     } catch (error) {
-      console.error('OpenAI streaming error:', error);
-      throw new Error('Failed to stream message with AI');
+      console.error("OpenAI streaming error:", error);
+      throw new Error("Failed to stream message with AI");
     }
   }
 
-  private async getCalendarContext(accessToken: string): Promise<ChatCalendarContext> {
+  private async getCalendarContext(
+    accessToken: string,
+  ): Promise<ChatCalendarContext> {
     const calendarClient = new GoogleCalendarClient(accessToken);
 
     try {
@@ -116,7 +127,7 @@ export class CalendarAIService {
         lastUpdated: new Date().toISOString(),
       };
     } catch (error) {
-      console.error('Error fetching calendar context:', error);
+      console.error("Error fetching calendar context:", error);
       // Return minimal context on error
       return {
         eventsToday: [],
@@ -139,7 +150,10 @@ Your capabilities include:
 Always provide helpful, concise, and actionable responses. Use the real-time calendar data provided to give accurate, personalized advice.`;
 
     if (!calendarContext) {
-      return basePrompt + '\n\nNote: Calendar data is not available for this request.';
+      return (
+        basePrompt +
+        "\n\nNote: Calendar data is not available for this request."
+      );
     }
 
     const contextSummary = this.buildCalendarContextSummary(calendarContext);
@@ -152,40 +166,50 @@ Use this real-time data to provide accurate, personalized responses about the us
   }
 
   private buildCalendarContextSummary(context: ChatCalendarContext): string {
-    let summary = '';
+    let summary = "";
 
     // Today's events
     if (context.eventsToday.length > 0) {
       summary += `TODAY'S SCHEDULE (${context.eventsToday.length} events):\n`;
-      context.eventsToday.forEach(event => {
-        const time = event.start.dateTime ? 
-          new Date(event.start.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : 
-          'All day';
-        summary += `- ${time}: ${event.summary}${event.location ? ` (${event.location})` : ''}\n`;
+      context.eventsToday.forEach((event) => {
+        const time = event.start.dateTime
+          ? new Date(event.start.dateTime).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            })
+          : "All day";
+        summary += `- ${time}: ${event.summary}${event.location ? ` (${event.location})` : ""}\n`;
       });
-      summary += '\n';
+      summary += "\n";
     } else {
-      summary += 'TODAY: No scheduled events\n\n';
+      summary += "TODAY: No scheduled events\n\n";
     }
 
     // Upcoming events
     if (context.upcomingEvents.length > 0) {
       summary += `UPCOMING EVENTS (next ${context.upcomingEvents.length}):\n`;
-      context.upcomingEvents.forEach(event => {
-        const date = event.start.dateTime ? 
-          new Date(event.start.dateTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 
-          'TBD';
-        const time = event.start.dateTime ? 
-          new Date(event.start.dateTime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : 
-          'All day';
+      context.upcomingEvents.forEach((event) => {
+        const date = event.start.dateTime
+          ? new Date(event.start.dateTime).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })
+          : "TBD";
+        const time = event.start.dateTime
+          ? new Date(event.start.dateTime).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            })
+          : "All day";
         summary += `- ${date} ${time}: ${event.summary}\n`;
       });
-      summary += '\n';
+      summary += "\n";
     }
 
     // Analytics
     if (context.analytics) {
-      const { totalEvents, totalMeetingHours, busyHoursToday, freeHoursToday } = context.analytics;
+      const { totalEvents, totalMeetingHours, busyHoursToday, freeHoursToday } =
+        context.analytics;
       summary += `WEEKLY SUMMARY:\n`;
       summary += `- Total meetings this week: ${totalEvents}\n`;
       summary += `- Total meeting hours: ${totalMeetingHours.toFixed(1)}h\n`;
@@ -198,13 +222,22 @@ Use this real-time data to provide accurate, personalized responses about the us
       summary += `TODAY'S AVAILABILITY:\n`;
       summary += `- Free time: ${(totalFreeTime / 60).toFixed(1)}h\n`;
       summary += `- Busy time: ${(totalBusyTime / 60).toFixed(1)}h\n`;
-      
+
       if (context.availability.freeSlots.length > 0) {
-        summary += `- Next free slots: ${context.availability.freeSlots.slice(0, 3).map(slot => {
-          const start = new Date(slot.start).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-          const end = new Date(slot.end).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-          return `${start}-${end}`;
-        }).join(', ')}\n`;
+        summary += `- Next free slots: ${context.availability.freeSlots
+          .slice(0, 3)
+          .map((slot) => {
+            const start = new Date(slot.start).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            });
+            const end = new Date(slot.end).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            });
+            return `${start}-${end}`;
+          })
+          .join(", ")}\n`;
       }
     }
 
@@ -215,74 +248,86 @@ Use this real-time data to provide accurate, personalized responses about the us
     systemPrompt: string,
     conversationHistory: ChatMessage[],
     currentMessage: string,
-    _calendarContext?: ChatCalendarContext
+    _calendarContext?: ChatCalendarContext,
   ): OpenAI.Chat.Completions.ChatCompletionMessageParam[] {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-      { role: 'system', content: systemPrompt }
+      { role: "system", content: systemPrompt },
     ];
 
     // Add recent conversation history (last 10 messages to stay within token limits)
     const recentHistory = conversationHistory.slice(-10);
-    recentHistory.forEach(msg => {
-      if (msg.role !== 'system') {
+    recentHistory.forEach((msg) => {
+      if (msg.role !== "system") {
         messages.push({
-          role: msg.role as 'user' | 'assistant',
-          content: msg.content
+          role: msg.role as "user" | "assistant",
+          content: msg.content,
         });
       }
     });
 
     // Add current message
-    messages.push({ role: 'user', content: currentMessage });
+    messages.push({ role: "user", content: currentMessage });
 
     return messages;
   }
 
   private generateSuggestedActions(
     message: string,
-    _calendarContext?: ChatCalendarContext
+    _calendarContext?: ChatCalendarContext,
   ): SuggestedAction[] {
     const actions: SuggestedAction[] = [];
     const lowerMessage = message.toLowerCase();
 
     // Suggest calendar-related actions based on message content and context
-    if (lowerMessage.includes('free') || lowerMessage.includes('available') || lowerMessage.includes('schedule')) {
+    if (
+      lowerMessage.includes("free") ||
+      lowerMessage.includes("available") ||
+      lowerMessage.includes("schedule")
+    ) {
       actions.push({
-        id: 'check-availability',
-        type: 'availability',
-        label: 'Check detailed availability',
-        description: 'View your free time slots for scheduling',
-        action: 'What are my available time slots for the rest of the week?'
+        id: "check-availability",
+        type: "availability",
+        label: "Check detailed availability",
+        description: "View your free time slots for scheduling",
+        action: "What are my available time slots for the rest of the week?",
       });
     }
 
-    if (lowerMessage.includes('meeting') || lowerMessage.includes('busy') || lowerMessage.includes('analytics')) {
+    if (
+      lowerMessage.includes("meeting") ||
+      lowerMessage.includes("busy") ||
+      lowerMessage.includes("analytics")
+    ) {
       actions.push({
-        id: 'meeting-analytics',
-        type: 'analytics',
-        label: 'Meeting analytics',
-        description: 'Get insights on your meeting patterns',
-        action: 'Show me my meeting analytics and patterns'
+        id: "meeting-analytics",
+        type: "analytics",
+        label: "Meeting analytics",
+        description: "Get insights on your meeting patterns",
+        action: "Show me my meeting analytics and patterns",
       });
     }
 
-    if (lowerMessage.includes('today') || lowerMessage.includes('schedule')) {
+    if (lowerMessage.includes("today") || lowerMessage.includes("schedule")) {
       actions.push({
-        id: 'todays-schedule',
-        type: 'calendar_query',
+        id: "todays-schedule",
+        type: "calendar_query",
         label: "Today's schedule",
-        description: 'View your complete schedule for today',
-        action: 'What does my schedule look like today?'
+        description: "View your complete schedule for today",
+        action: "What does my schedule look like today?",
       });
     }
 
-    if (lowerMessage.includes('tomorrow') || lowerMessage.includes('next') || lowerMessage.includes('upcoming')) {
+    if (
+      lowerMessage.includes("tomorrow") ||
+      lowerMessage.includes("next") ||
+      lowerMessage.includes("upcoming")
+    ) {
       actions.push({
-        id: 'upcoming-events',
-        type: 'calendar_query',
-        label: 'Upcoming events',
-        description: 'See your next scheduled events',
-        action: 'What are my upcoming events?'
+        id: "upcoming-events",
+        type: "calendar_query",
+        label: "Upcoming events",
+        description: "See your next scheduled events",
+        action: "What are my upcoming events?",
       });
     }
 
@@ -290,25 +335,25 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (actions.length === 0) {
       actions.push(
         {
-          id: 'schedule-overview',
-          type: 'calendar_query',
-          label: 'Schedule overview',
-          action: 'Give me an overview of my schedule'
+          id: "schedule-overview",
+          type: "calendar_query",
+          label: "Schedule overview",
+          action: "Give me an overview of my schedule",
         },
         {
-          id: 'find-meeting-time',
-          type: 'scheduling',
-          label: 'Find meeting time',
-          action: 'When would be a good time for a 1-hour meeting this week?'
-        }
+          id: "find-meeting-time",
+          type: "scheduling",
+          label: "Find meeting time",
+          action: "When would be a good time for a 1-hour meeting this week?",
+        },
       );
     }
 
     return actions.slice(0, 4); // Limit to 4 suggestions
   }
 
-  private async* createStreamIterator(
-    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>
+  private async *createStreamIterator(
+    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>,
   ): AsyncIterable<string> {
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content;

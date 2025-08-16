@@ -16,7 +16,7 @@ export interface CalendarEvent {
   attendees?: Array<{
     email: string;
     displayName?: string;
-    responseStatus?: 'needsAction' | 'declined' | 'tentative' | 'accepted';
+    responseStatus?: "needsAction" | "declined" | "tentative" | "accepted";
   }>;
   creator?: {
     email: string;
@@ -26,7 +26,7 @@ export interface CalendarEvent {
     email: string;
     displayName?: string;
   };
-  status?: 'confirmed' | 'tentative' | 'cancelled';
+  status?: "confirmed" | "tentative" | "cancelled";
   recurring?: boolean;
   recurringEventId?: string;
   hangoutLink?: string;

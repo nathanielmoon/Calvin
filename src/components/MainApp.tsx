@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { SessionProvider } from 'next-auth/react';
-import ChatInterface from '@/components/ChatInterface';
-import Header from '@/components/Header';
-import CalendarContextPanel from '@/components/CalendarContextPanel';
-import { Button } from '@/components/ui/button';
-import { PanelLeft, PanelLeftClose } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { useState } from "react";
+import { SessionProvider } from "next-auth/react";
+import ChatInterface from "@/components/ChatInterface";
+import Header from "@/components/Header";
+import CalendarContextPanel from "@/components/CalendarContextPanel";
+import { Button } from "@/components/ui/button";
+import { PanelLeft, PanelLeftClose } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface MainAppProps {
   session: any;
@@ -18,7 +18,7 @@ export default function MainApp({ session }: MainAppProps) {
 
   const handleNewConversation = () => {
     // Clear chat history
-    localStorage.removeItem('calvin-chat-history');
+    localStorage.removeItem("calvin-chat-history");
     // Force a re-render by reloading the page (simple approach)
     window.location.reload();
   };
@@ -28,7 +28,7 @@ export default function MainApp({ session }: MainAppProps) {
       <div className="h-screen flex flex-col bg-background">
         {/* Header */}
         <Header onNewConversation={handleNewConversation} />
-        
+
         {/* Main Content Area */}
         <div className="flex flex-1 overflow-hidden">
           {/* Chat Interface - Primary Focus */}
@@ -50,10 +50,10 @@ export default function MainApp({ session }: MainAppProps) {
                 </Button>
               </div>
             </div>
-            
+
             <ChatInterface className="flex-1" />
           </div>
-          
+
           {/* Optional Calendar Context Panel */}
           {showCalendarPanel && (
             <div className="w-80 border-l bg-muted/30">

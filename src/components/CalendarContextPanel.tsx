@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { CalendarIcon, Clock, Users, TrendingUp, RefreshCw } from 'lucide-react';
-import { CalendarEvent, CalendarAnalytics } from '@/types/calendar';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  CalendarIcon,
+  Clock,
+  Users,
+  TrendingUp,
+  RefreshCw,
+} from "lucide-react";
+import { CalendarEvent, CalendarAnalytics } from "@/types/calendar";
+import { cn } from "@/lib/utils";
 
 export default function CalendarContextPanel() {
   const { data: session } = useSession();
@@ -25,14 +31,15 @@ export default function CalendarContextPanel() {
     setError(null);
 
     try {
-      const [todaysResponse, upcomingResponse, analyticsResponse] = await Promise.all([
-        fetch('/api/calendar/events?preset=today'),
-        fetch('/api/calendar/events?preset=upcoming&count=5'),
-        fetch('/api/calendar/analytics?preset=today'),
-      ]);
+      const [todaysResponse, upcomingResponse, analyticsResponse] =
+        await Promise.all([
+          fetch("/api/calendar/events?preset=today"),
+          fetch("/api/calendar/events?preset=upcoming&count=5"),
+          fetch("/api/calendar/analytics?preset=today"),
+        ]);
 
       if (!todaysResponse.ok || !upcomingResponse.ok || !analyticsResponse.ok) {
-        throw new Error('Failed to fetch calendar data');
+        throw new Error("Failed to fetch calendar data");
       }
 
       const [todaysData, upcomingData, analyticsData] = await Promise.all([
@@ -45,7 +52,9 @@ export default function CalendarContextPanel() {
       setUpcomingEvents(upcomingData.events || []);
       setAnalytics(analyticsData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load calendar data');
+      setError(
+        err instanceof Error ? err.message : "Failed to load calendar data",
+      );
     } finally {
       setLoading(false);
     }
@@ -55,17 +64,20 @@ export default function CalendarContextPanel() {
     fetchCalendarData();
   }, [session]);
 
-  const formatTime = (dateTimeString: string | undefined, dateString: string | undefined) => {
+  const formatTime = (
+    dateTimeString: string | undefined,
+    dateString: string | undefined,
+  ) => {
     if (dateTimeString) {
-      return new Date(dateTimeString).toLocaleTimeString([], { 
-        hour: '2-digit', 
-        minute: '2-digit' 
+      return new Date(dateTimeString).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
       });
     }
     if (dateString) {
-      return 'All day';
+      return "All day";
     }
-    return '';
+    return "";
   };
 
   if (!session) {
@@ -210,10 +222,9 @@ export default function CalendarContextPanel() {
                 >
                   <div className="font-medium truncate">{event.summary}</div>
                   <div className="text-muted-foreground">
-                    {event.start.dateTime 
+                    {event.start.dateTime
                       ? new Date(event.start.dateTime).toLocaleDateString()
-                      : event.start.date
-                    }
+                      : event.start.date}
                   </div>
                 </div>
               ))}
@@ -247,10 +258,12 @@ export default function CalendarContextPanel() {
                 {analytics.averageMeetingLength.toFixed(0)}m
               </span>
             </div>
-            
+
             {analytics.meetingTypes && (
               <div className="mt-3 space-y-1">
-                <div className="text-muted-foreground text-xs">Meeting Types:</div>
+                <div className="text-muted-foreground text-xs">
+                  Meeting Types:
+                </div>
                 <div className="flex flex-wrap gap-1">
                   {analytics.meetingTypes.virtual > 0 && (
                     <Badge variant="secondary" className="text-xs">

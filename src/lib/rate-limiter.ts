@@ -11,12 +11,17 @@ class RateLimiter {
   private maxRequests: number;
   private windowMs: number;
 
-  constructor(maxRequests: number = 100, windowMs: number = 15 * 60 * 1000) { // 100 requests per 15 minutes
+  constructor(maxRequests: number = 100, windowMs: number = 15 * 60 * 1000) {
+    // 100 requests per 15 minutes
     this.maxRequests = maxRequests;
     this.windowMs = windowMs;
   }
 
-  isAllowed(identifier: string): { allowed: boolean; resetTime?: number; remainingRequests?: number } {
+  isAllowed(identifier: string): {
+    allowed: boolean;
+    resetTime?: number;
+    remainingRequests?: number;
+  } {
     const now = Date.now();
     const entry = this.store.get(identifier);
 
@@ -75,16 +80,19 @@ export const calendarApiRateLimiter = new RateLimiter(50, 15 * 60 * 1000); // 50
 export const chatApiRateLimiter = new RateLimiter(30, 60 * 1000); // 30 requests per minute for chat API
 
 // Cleanup every 5 minutes
-setInterval(() => {
-  calendarApiRateLimiter.cleanup();
-  chatApiRateLimiter.cleanup();
-}, 5 * 60 * 1000);
+setInterval(
+  () => {
+    calendarApiRateLimiter.cleanup();
+    chatApiRateLimiter.cleanup();
+  },
+  5 * 60 * 1000,
+);
 
 export function createRateLimitResponse(resetTime: number) {
   const secondsUntilReset = Math.ceil((resetTime - Date.now()) / 1000);
-  
+
   return {
-    error: 'Rate limit exceeded',
+    error: "Rate limit exceeded",
     retryAfter: secondsUntilReset,
     message: `Too many requests. Try again in ${secondsUntilReset} seconds.`,
   };

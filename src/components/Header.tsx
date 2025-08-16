@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Calendar, LogOut, Plus } from 'lucide-react';
+import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Calendar, LogOut, Plus } from "lucide-react";
 
 interface HeaderProps {
   onNewConversation?: () => void;
@@ -38,24 +43,29 @@ export default function Header({ onNewConversation }: HeaderProps) {
           )}
 
           {/* Authentication Section */}
-          {status === 'loading' ? (
+          {status === "loading" ? (
             <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
           ) : session ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Button
+                  variant="ghost"
+                  className="relative h-8 w-8 rounded-full"
+                >
                   <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={session.user?.image || ''}
-                      alt={session.user?.name || ''}
+                      src={session.user?.image || ""}
+                      alt={session.user?.name || ""}
                     />
                     <AvatarFallback className="text-xs">
-                      {session.user?.name?.charAt(0) || session.user?.email?.charAt(0) || 'U'}
+                      {session.user?.name?.charAt(0) ||
+                        session.user?.email?.charAt(0) ||
+                        "U"}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              
+
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
@@ -69,9 +79,9 @@ export default function Header({ onNewConversation }: HeaderProps) {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="h-px bg-border my-1" />
-                
+
                 <DropdownMenuItem
                   onClick={() => signOut()}
                   className="cursor-pointer"
@@ -83,7 +93,7 @@ export default function Header({ onNewConversation }: HeaderProps) {
             </DropdownMenu>
           ) : (
             <Button
-              onClick={() => signIn('google')}
+              onClick={() => signIn("google")}
               variant="default"
               size="sm"
               className="flex items-center gap-2"

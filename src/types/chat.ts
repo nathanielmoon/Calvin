@@ -1,8 +1,12 @@
-import { CalendarEvent, CalendarAnalytics, CalendarAvailability } from './calendar';
+import {
+  CalendarEvent,
+  CalendarAnalytics,
+  CalendarAvailability,
+} from "./calendar";
 
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp: string;
   metadata?: {
@@ -22,7 +26,7 @@ export interface ChatCalendarContext {
 
 export interface SuggestedAction {
   id: string;
-  type: 'calendar_query' | 'scheduling' | 'analytics' | 'availability';
+  type: "calendar_query" | "scheduling" | "analytics" | "availability";
   label: string;
   description?: string;
   action: string;
@@ -57,7 +61,7 @@ export interface ChatResponse {
 
 export interface ChatStreamChunk {
   id: string;
-  type: 'content' | 'context' | 'actions' | 'done';
+  type: "content" | "context" | "actions" | "done";
   content?: string;
   calendarContext?: ChatCalendarContext;
   suggestedActions?: SuggestedAction[];
