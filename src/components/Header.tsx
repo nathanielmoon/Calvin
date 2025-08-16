@@ -30,18 +30,6 @@ export default function Header({ onNewConversation }: HeaderProps) {
 
         {/* Navigation - Keep minimal */}
         <div className="flex items-center gap-4">
-          {session && onNewConversation && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onNewConversation}
-              className="flex items-center gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              New Chat
-            </Button>
-          )}
-
           {/* Authentication Section */}
           {status === "loading" ? (
             <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />

@@ -91,8 +91,11 @@ export default function CalendarAnalytics() {
   }
 
   return (
-    <div className="p-4 space-y-4 h-full overflow-y-auto">
-      <RefreshButton onRefresh={fetchCalendarData} loading={loading} />
+    <div className="p-4 space-y-8 h-full overflow-y-auto">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold">Calendar Analytics</h2>
+        <RefreshButton onRefresh={fetchCalendarData} loading={loading} />
+      </div>
 
       {error && (
         <Card className="border-destructive/50">
@@ -102,17 +105,19 @@ export default function CalendarAnalytics() {
         </Card>
       )}
 
-      <TodaysSummary
-        analytics={analytics}
-        loading={loading}
-        todaysEventsCount={todaysEvents.length}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <TodaysSummary
+          analytics={analytics}
+          loading={loading}
+          todaysEventsCount={todaysEvents.length}
+        />
 
-      <TodaysEvents events={todaysEvents} loading={loading} />
+        <TodaysEvents events={todaysEvents} loading={loading} />
 
-      <UpcomingEvents events={upcomingEvents} loading={loading} />
+        <UpcomingEvents events={upcomingEvents} loading={loading} />
 
-      {analytics && <WeeklyStats analytics={analytics} />}
+        {analytics && <WeeklyStats analytics={analytics} />}
+      </div>
     </div>
   );
 }

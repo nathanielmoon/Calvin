@@ -7,6 +7,8 @@ import {
   CalendarAvailability,
   AvailabilitySlot,
 } from "@/types/calendar";
+import { auth, signOut } from "../auth";
+import get from "lodash.get";
 
 export class GoogleCalendarClient {
   private calendar;
@@ -37,7 +39,10 @@ export class GoogleCalendarClient {
         .filter((event): event is calendar_v3.Schema$Event => !!event.id)
         .map(this.formatEvent);
     } catch (error) {
-      console.error("Error fetching calendar events:", error);
+      if (get(error, "status") === 401) {
+        await signOut({ redirect: true, redirectTo: "/" });
+      }
+      console.error("Error fetching calendar events:", {error});
       throw new Error("Failed to fetch calendar events");
     }
   }

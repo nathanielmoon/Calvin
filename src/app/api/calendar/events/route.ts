@@ -75,6 +75,7 @@ export async function GET(request: NextRequest) {
     // Handle various authentication errors
     if (error instanceof Error) {
       const errorMessage = error.message.toLowerCase();
+      console.log("errorMessage", errorMessage);
       if (
         errorMessage.includes("invalid_grant") ||
         errorMessage.includes("invalid authentication credentials") ||

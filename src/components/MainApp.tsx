@@ -15,7 +15,9 @@ interface MainAppProps {
 }
 
 export default function MainApp({ session }: MainAppProps) {
-  const [currentView, setCurrentView] = useState<"chat" | "calendar" | "analytics">("chat");
+  const [currentView, setCurrentView] = useState<
+    "chat" | "calendar" | "analytics"
+  >("chat");
   const [messages, setMessages] = useState<Message[]>([]);
   const handleNewConversation = () => {
     // Clear chat history
@@ -34,11 +36,13 @@ export default function MainApp({ session }: MainAppProps) {
     setCurrentView(view);
   };
 
+
+
   return (
     <SessionProvider session={session}>
       <div className="h-screen w-screen flex flex-col bg-background">
         {/* Header */}
-        <Header onNewConversation={handleNewConversation} />
+        <Header  />
 
         {/* Toolbar */}
         <Toolbar
@@ -46,6 +50,7 @@ export default function MainApp({ session }: MainAppProps) {
           currentView={currentView}
           onClearHistory={clearHistory}
           onViewToggle={handleViewToggle}
+          onNewConversation={handleNewConversation}
         />
 
         {/* Main Content Area */}
