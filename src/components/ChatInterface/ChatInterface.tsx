@@ -122,15 +122,18 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
 
   return (
     <div className={cn("flex flex-col h-full", className)}>
-      <ChatHeader messageCount={messages.length} onClearHistory={clearHistory} />
-      
+      <ChatHeader
+        messageCount={messages.length}
+        onClearHistory={clearHistory}
+      />
+
       <MessagesArea
         messages={messages}
         isLoading={isLoading}
         hasSession={!!session}
         onSendMessage={sendMessage}
       />
-      
+
       <ChatInput
         inputMessage={inputMessage}
         isLoading={isLoading}

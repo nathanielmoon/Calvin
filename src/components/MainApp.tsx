@@ -11,7 +11,6 @@ interface MainAppProps {
 }
 
 export default function MainApp({ session }: MainAppProps) {
-
   const handleNewConversation = () => {
     // Clear chat history
     localStorage.removeItem("calvin-chat-history");
@@ -29,7 +28,6 @@ export default function MainApp({ session }: MainAppProps) {
         <div className="flex flex-1 overflow-hidden">
           {/* Chat Interface - Primary Focus */}
           <div className="flex-1 flex flex-col min-w-0">
-
             <ChatInterface className="flex-1" />
           </div>
 

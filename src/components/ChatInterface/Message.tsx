@@ -36,18 +36,14 @@ export function Message({ message, onSendMessage }: MessageProps) {
             : "bg-muted",
         )}
       >
-        <div className="whitespace-pre-wrap text-sm">
-          {message.content}
-        </div>
+        <div className="whitespace-pre-wrap text-sm">{message.content}</div>
 
         {/* Suggested Actions */}
         {message.role === "assistant" &&
           message.suggestedActions &&
           message.suggestedActions.length > 0 && (
             <div className="mt-3 pt-3 border-t border-current/10">
-              <div className="text-xs opacity-70 mb-2">
-                Suggested actions:
-              </div>
+              <div className="text-xs opacity-70 mb-2">Suggested actions:</div>
               <div className="grid gap-1">
                 {message.suggestedActions.map((action) => (
                   <Button
@@ -69,13 +65,12 @@ export function Message({ message, onSendMessage }: MessageProps) {
             {new Date(message.timestamp).toLocaleTimeString()}
           </span>
 
-          {message.role === "assistant" &&
-            message.calendarContextIncluded && (
-              <div className="flex items-center gap-1 text-xs opacity-70">
-                <Calendar className="h-3 w-3" />
-                <span>With calendar data</span>
-              </div>
-            )}
+          {message.role === "assistant" && message.calendarContextIncluded && (
+            <div className="flex items-center gap-1 text-xs opacity-70">
+              <Calendar className="h-3 w-3" />
+              <span>With calendar data</span>
+            </div>
+          )}
         </div>
       </Card>
 
