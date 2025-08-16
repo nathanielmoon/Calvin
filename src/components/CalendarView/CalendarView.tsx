@@ -7,11 +7,12 @@ import { CalendarHeader } from "./CalendarHeader";
 import { DayView } from "./DayView";
 import { WeekView } from "./WeekView";
 import { MonthView } from "./MonthView";
-import { sampleEvents } from "./sampleData";
+import { useCalendarEvents } from "@/hooks/useCalendarEvents";
 
 export default function CalendarView() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>("month");
+  const { events, loading, error, refetch } = useCalendarEvents(currentDate, view);
 
   const navigateDate = (direction: "prev" | "next") => {
     setCurrentDate((prev) => {
@@ -32,6 +33,31 @@ export default function CalendarView() {
     setCurrentDate(new Date());
   };
 
+  if (error) {
+    return (
+      <div className="flex flex-col h-full">
+        <CalendarHeader
+          currentDate={currentDate}
+          view={view}
+          onViewChange={setView}
+          onNavigate={navigateDate}
+          onToday={handleToday}
+        />
+        <div className="flex-1 p-4 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">Error loading calendar events: {error}</p>
+            <button
+              onClick={refetch}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full">
       <CalendarHeader
@@ -43,9 +69,18 @@ export default function CalendarView() {
       />
 
       <div className="flex-1 p-4">
-        {view === "day" && <DayView currentDate={currentDate} events={sampleEvents} />}
-        {view === "week" && <WeekView currentDate={currentDate} events={sampleEvents} />}
-        {view === "month" && <MonthView currentDate={currentDate} events={sampleEvents} />}
+        {loading ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <span className="ml-2">Loading calendar events...</span>
+          </div>
+        ) : (
+          <>
+            {view === "day" && <DayView currentDate={currentDate} events={events} />}
+            {view === "week" && <WeekView currentDate={currentDate} events={events} />}
+            {view === "month" && <MonthView currentDate={currentDate} events={events} />}
+          </>
+        )}
       </div>
     </div>
   );
