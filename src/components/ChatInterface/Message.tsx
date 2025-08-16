@@ -3,7 +3,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Card } from "@/components/ui/card";
-import { Calendar, Bot, User } from "lucide-react";
+import { Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message as MessageType } from "./types";
 
@@ -30,9 +30,9 @@ export function Message({ message, onSendMessage }: MessageProps) {
 
       <Card
         className={cn(
-          "max-w-[80%] p-3",
+          "max-w-[80%] p-3 gap-2",
           message.role === "user"
-            ? "bg-primary text-primary-foreground"
+            ? "bg-sky-700 text-primary-foreground"
             : "bg-muted"
         )}
       >
@@ -44,17 +44,10 @@ export function Message({ message, onSendMessage }: MessageProps) {
           )}
         </div>
 
-        <div className="flex items-center justify-between mt-2 pt-2 border-t border-current/10">
+        <div className="flex items-center justify-between border-current/10">
           <span className="text-xs opacity-70">
             {new Date(message.timestamp).toLocaleTimeString()}
           </span>
-
-          {message.role === "assistant" && message.calendarContextIncluded && (
-            <div className="flex items-center gap-1 text-xs opacity-70">
-              <Calendar className="h-3 w-3" />
-              <span>With calendar data</span>
-            </div>
-          )}
         </div>
       </Card>
 

@@ -20,7 +20,7 @@ export function CalvinsHead() {
       className="w-full max-w-full"
     />
   </div>
-  <div className="h-32 sm:h-48 md:h-72 w-full" />
+  <div className="h-36 sm:h-56 md:h-72 w-full" />
   </>
   )
 }

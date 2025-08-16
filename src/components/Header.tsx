@@ -28,7 +28,7 @@ export default function Header({ onNewConversation }: HeaderProps) {
         {/* Logo/Brand */}
         <div className="flex items-center gap-2">
           <Image src="/images/logo.png" alt="Calvin" width={32} height={32} className="-translate-y-[2px]" />
-          <span className={cn(titleFont.className, "text-3xl font-extrabold ml-1")}>Calvin</span>
+          <span className={cn(titleFont.className, "text-2xl font-extrabold ml-1")}>CALVIN</span>
         </div>
 
         {/* Navigation - Keep minimal */}

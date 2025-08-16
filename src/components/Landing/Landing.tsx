@@ -13,8 +13,8 @@ export default function Landing() {
         <div className="relative flex flex-col items-center justify-center gap-2">
           <CalvinsHead />
           <Title />
-          <SubTitle />
         </div>
+        <SubTitle />
         <SignInButton />
       </div>
     </div>
