@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Calendar, Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message as MessageType } from "./types";
@@ -36,29 +36,13 @@ export function Message({ message, onSendMessage }: MessageProps) {
             : "bg-muted",
         )}
       >
-        <div className="whitespace-pre-wrap text-sm">{message.content}</div>
-
-        {/* Suggested Actions */}
-        {message.role === "assistant" &&
-          message.suggestedActions &&
-          message.suggestedActions.length > 0 && (
-            <div className="mt-3 pt-3 border-t border-current/10">
-              <div className="text-xs opacity-70 mb-2">Suggested actions:</div>
-              <div className="grid gap-1">
-                {message.suggestedActions.map((action) => (
-                  <Button
-                    key={action.id}
-                    variant="ghost"
-                    size="sm"
-                    className="h-auto py-1 px-2 text-xs justify-start text-left whitespace-normal opacity-80 hover:opacity-100"
-                    onClick={() => onSendMessage(action.action)}
-                  >
-                    {action.label}
-                  </Button>
-                ))}
-              </div>
-            </div>
+        <div className="text-sm prose prose-sm max-w-none dark:prose-invert">
+          {message.role === "assistant" ? (
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          ) : (
+            <div className="whitespace-pre-wrap">{message.content}</div>
           )}
+        </div>
 
         <div className="flex items-center justify-between mt-2 pt-2 border-t border-current/10">
           <span className="text-xs opacity-70">
