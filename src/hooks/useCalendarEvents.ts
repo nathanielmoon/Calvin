@@ -1,7 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { Event } from "@/components/CalendarView/CalendarTypes";
 import { CalendarEvent } from "@/types/calendar";
-import { startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from "date-fns";
+import {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+} from "date-fns";
 
 interface UseCalendarEventsResult {
   events: Event[];
@@ -12,7 +19,7 @@ interface UseCalendarEventsResult {
 
 export function useCalendarEvents(
   currentDate: Date,
-  view: "day" | "week" | "month"
+  view: "day" | "week" | "month",
 ): UseCalendarEventsResult {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,25 +56,33 @@ export function useCalendarEvents(
       });
 
       const response = await fetch(`/api/calendar/events?${params.toString()}`);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch events: ${response.statusText}`);
       }
 
       const data = await response.json();
-      
+
       // Transform CalendarEvent to Event format
-      const transformedEvents: Event[] = data.events.map((event: CalendarEvent) => ({
-        id: event.id,
-        title: event.summary,
-        start: event.start.dateTime ? new Date(event.start.dateTime) : new Date(event.start.date || ""),
-        end: event.end.dateTime ? new Date(event.end.dateTime) : new Date(event.end.date || ""),
-        color: getEventColor(event),
-      }));
+      const transformedEvents: Event[] = data.events.map(
+        (event: CalendarEvent) => ({
+          id: event.id,
+          title: event.summary,
+          start: event.start.dateTime
+            ? new Date(event.start.dateTime)
+            : new Date(event.start.date || ""),
+          end: event.end.dateTime
+            ? new Date(event.end.dateTime)
+            : new Date(event.end.date || ""),
+          color: getEventColor(event),
+        }),
+      );
 
       setEvents(transformedEvents);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch calendar events");
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch calendar events",
+      );
       setEvents([]);
     } finally {
       setLoading(false);

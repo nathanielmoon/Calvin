@@ -51,8 +51,7 @@ export function MonthView({ currentDate, events }: MonthViewProps) {
           {weeks.map((week, weekIndex) =>
             week.map((day, dayIndex) => {
               const dayEvents = getEventsForDate(day);
-              const isCurrentMonth =
-                day.getMonth() === currentDate.getMonth();
+              const isCurrentMonth = day.getMonth() === currentDate.getMonth();
               const isToday = isSameDay(day, new Date());
 
               return (

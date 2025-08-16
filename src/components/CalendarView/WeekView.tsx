@@ -56,10 +56,7 @@ export function WeekView({ currentDate, events }: WeekViewProps) {
               </div>
               <div className="relative">
                 {hours.map((hour) => (
-                  <div
-                    key={hour}
-                    className="h-12 border-b border-border/50"
-                  />
+                  <div key={hour} className="h-12 border-b border-border/50" />
                 ))}
                 {getEventsForDate(day).map((event) => {
                   const startHour = event.start.getHours();
@@ -79,9 +76,7 @@ export function WeekView({ currentDate, events }: WeekViewProps) {
                       )}
                       style={{ top: `${top}px`, height: `${height}px` }}
                     >
-                      <div className="font-medium truncate">
-                        {event.title}
-                      </div>
+                      <div className="font-medium truncate">{event.title}</div>
                     </div>
                   );
                 })}

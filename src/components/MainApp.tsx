@@ -8,6 +8,7 @@ import { Toolbar } from "@/components/Toolbar";
 import { Message } from "@/components/ChatInterface/types";
 import type { Session } from "next-auth";
 import { CalendarAnalyticsSheet } from "./CalendarAnalyticsSheet";
+import { ContentContainer } from "./ContentContainer";
 
 interface MainAppProps {
   session: Session | null;
@@ -54,14 +55,14 @@ export default function MainApp({ session }: MainAppProps) {
         />
 
         {/* Main Content Area */}
-        <div className="flex flex-1 overflow-hidden">
+        <ContentContainer>
           {/* Chat Interface - Full Width */}
           <ChatInterface
             className="flex-1"
             currentView={currentView}
             onMessagesChange={setMessages}
           />
-        </div>
+        </ContentContainer>
 
         <CalendarAnalyticsSheet
           open={calendarAnalyticsOpen}

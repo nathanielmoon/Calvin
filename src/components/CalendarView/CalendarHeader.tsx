@@ -34,7 +34,7 @@ export function CalendarHeader({
   };
 
   return (
-    <div className="flex flex-col items-start md:flex-row md:items-center justify-between gap-4 p-4 border-b">
+    <div className="flex flex-col items-start md:flex-row md:items-center justify-between gap-4 p-4">
       <div className="flex items-center gap-4">
         <h2 className="text-2xl font-semibold">{getViewTitle()}</h2>
       </div>
