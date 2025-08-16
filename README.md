@@ -44,6 +44,7 @@ NEXTAUTH_URL=http://localhost:3000
 ```
 
 Generate a random secret for `NEXTAUTH_SECRET`:
+
 ```bash
 openssl rand -base64 32
 ```
@@ -76,13 +77,14 @@ src/
 
 - **Next.js 15** - React framework with App Router
 - **NextAuth.js v5** - Authentication library
-- **Tailwind CSS** - Utility-first CSS framework  
+- **Tailwind CSS** - Utility-first CSS framework
 - **TypeScript** - Type safety
 - **Google APIs** - Calendar and Gmail integration
 
 ## Required Scopes
 
 The application requests the following Google OAuth scopes:
+
 - `openid`, `email`, `profile` - Basic user information
 - `https://www.googleapis.com/auth/calendar.readonly` - Read calendar events
 - `https://www.googleapis.com/auth/calendar.events` - Create/modify calendar events

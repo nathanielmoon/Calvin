@@ -1,5 +1,5 @@
-import NextAuth from "next-auth"
-import Google from "next-auth/providers/google"
+import NextAuth from "next-auth";
+import Google from "next-auth/providers/google";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -10,32 +10,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         params: {
           scope: [
             "openid",
-            "email", 
+            "email",
             "profile",
             "https://www.googleapis.com/auth/calendar.readonly",
             "https://www.googleapis.com/auth/calendar.events",
-            "https://www.googleapis.com/auth/gmail.compose"
+            "https://www.googleapis.com/auth/gmail.compose",
           ].join(" "),
           access_type: "offline",
-          prompt: "consent"
-        }
-      }
-    })
+          prompt: "consent",
+        },
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
-        token.accessToken = account.access_token
-        token.refreshToken = account.refresh_token
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken as string
-      return session
-    }
+      session.accessToken = token.accessToken as string;
+      return session;
+    },
   },
   pages: {
-    signIn: '/',
-  }
-})
+    signIn: "/",
+  },
+});

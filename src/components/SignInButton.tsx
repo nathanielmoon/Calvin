@@ -1,12 +1,15 @@
-"use client"
+"use client";
 
-import { signIn } from "next-auth/react"
+import { signIn } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 export function SignInButton() {
   return (
-    <button
+    <Button
       onClick={() => signIn("google")}
-      className="w-full bg-white border border-gray-300 rounded-lg px-6 py-3 text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-3 shadow-sm"
+      variant="outline"
+      size="lg"
+      className="w-full gap-3"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
         <path
@@ -27,6 +30,6 @@ export function SignInButton() {
         />
       </svg>
       Sign in with Google
-    </button>
-  )
+    </Button>
+  );
 }
