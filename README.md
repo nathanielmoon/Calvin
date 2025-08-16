@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calvin - Calendar Agent
 
-## Getting Started
+An intelligent calendar management application that integrates with Google Calendar and provides AI-powered scheduling assistance.
 
-First, run the development server:
+## Features
+
+- Google OAuth authentication with calendar access
+- Clean, responsive UI built with Next.js and Tailwind CSS
+- Secure session management with NextAuth.js
+
+## Setup Instructions
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <repository-url>
+cd calvin
+npm install
+```
+
+### 2. Configure Google OAuth
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google Calendar API and Gmail API
+4. Create OAuth 2.0 credentials:
+   - Go to "Credentials" → "Create Credentials" → "OAuth 2.0 Client ID"
+   - Set application type to "Web application"
+   - Add authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
+5. Copy the Client ID and Client Secret
+
+### 3. Environment Variables
+
+Update the `.env.local` file with your Google OAuth credentials:
+
+```env
+# Google OAuth Configuration
+GOOGLE_CLIENT_ID=your-google-client-id-here
+GOOGLE_CLIENT_SECRET=your-google-client-secret-here
+
+# NextAuth Configuration
+NEXTAUTH_SECRET=your-random-secret-here
+NEXTAUTH_URL=http://localhost:3000
+```
+
+Generate a random secret for `NEXTAUTH_SECRET`:
+```bash
+openssl rand -base64 32
+```
+
+### 4. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── api/auth/[...nextauth]/route.ts  # NextAuth API routes
+│   ├── layout.tsx                       # Root layout with SessionProvider
+│   └── page.tsx                         # Landing page with auth flow
+├── components/
+│   ├── Dashboard.tsx                    # Post-authentication dashboard
+│   └── SignInButton.tsx                 # Google sign-in button
+├── auth.ts                              # NextAuth configuration
+└── types/
+    └── next-auth.d.ts                   # TypeScript declarations
+```
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** - React framework with App Router
+- **NextAuth.js v5** - Authentication library
+- **Tailwind CSS** - Utility-first CSS framework  
+- **TypeScript** - Type safety
+- **Google APIs** - Calendar and Gmail integration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Required Scopes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application requests the following Google OAuth scopes:
+- `openid`, `email`, `profile` - Basic user information
+- `https://www.googleapis.com/auth/calendar.readonly` - Read calendar events
+- `https://www.googleapis.com/auth/calendar.events` - Create/modify calendar events
+- `https://www.googleapis.com/auth/gmail.compose` - Draft emails
 
-## Deploy on Vercel
+## Next Steps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Implement calendar data fetching and display
+- Add chat interface for AI agent interaction
+- Integrate with AI language model for intelligent responses
+- Add meeting analytics and insights
