@@ -35,9 +35,7 @@ export function WeeklyStats({ analytics }: WeeklyStatsProps) {
 
         {analytics.meetingTypes && (
           <div className="mt-3 space-y-1">
-            <div className="text-muted-foreground text-xs">
-              Meeting Types:
-            </div>
+            <div className="text-muted-foreground text-xs">Meeting Types:</div>
             <div className="flex flex-wrap gap-1">
               {analytics.meetingTypes.virtual > 0 && (
                 <Badge variant="secondary" className="text-xs">

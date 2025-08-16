@@ -4,7 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarIcon } from "lucide-react";
-import { CalendarEvent, CalendarAnalytics as CalendarAnalyticsType } from "@/types/calendar";
+import {
+  CalendarEvent,
+  CalendarAnalytics as CalendarAnalyticsType,
+} from "@/types/calendar";
 import { TodaysSummary } from "./TodaysSummary";
 import { TodaysEvents } from "./TodaysEvents";
 import { UpcomingEvents } from "./UpcomingEvents";
@@ -15,7 +18,9 @@ export default function CalendarAnalytics() {
   const { data: session } = useSession();
   const [todaysEvents, setTodaysEvents] = useState<CalendarEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
-  const [analytics, setAnalytics] = useState<CalendarAnalyticsType | null>(null);
+  const [analytics, setAnalytics] = useState<CalendarAnalyticsType | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -86,10 +91,10 @@ export default function CalendarAnalytics() {
         </Card>
       )}
 
-      <TodaysSummary 
-        analytics={analytics} 
-        loading={loading} 
-        todaysEventsCount={todaysEvents.length} 
+      <TodaysSummary
+        analytics={analytics}
+        loading={loading}
+        todaysEventsCount={todaysEvents.length}
       />
 
       <TodaysEvents events={todaysEvents} loading={loading} />

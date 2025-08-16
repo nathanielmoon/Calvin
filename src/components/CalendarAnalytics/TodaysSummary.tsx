@@ -12,7 +12,11 @@ interface TodaysSummaryProps {
   todaysEventsCount: number;
 }
 
-export function TodaysSummary({ analytics, loading, todaysEventsCount }: TodaysSummaryProps) {
+export function TodaysSummary({
+  analytics,
+  loading,
+  todaysEventsCount,
+}: TodaysSummaryProps) {
   return (
     <Card>
       <CardHeader className="pb-2">

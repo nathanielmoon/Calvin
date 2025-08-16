@@ -20,7 +20,7 @@ export default function Header({ onNewConversation }: HeaderProps) {
   const { data: session, status } = useSession();
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center justify-between px-6">
         {/* Logo/Brand */}
         <div className="flex items-center gap-2">

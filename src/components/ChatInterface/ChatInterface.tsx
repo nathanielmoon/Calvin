@@ -3,18 +3,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
-import { ChatHeader } from "./ChatHeader";
 import { MessagesArea } from "./MessagesArea";
 import { ChatInput } from "./ChatInput";
-import { CalendarSheet } from "../CalendarSheet";
+import CalendarView from "../CalendarView";
 import { Message, ChatInterfaceProps } from "./types";
 
-export function ChatInterface({ className }: ChatInterfaceProps) {
+export function ChatInterface({ className, currentView: externalCurrentView, onMessagesChange }: ChatInterfaceProps) {
   const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const currentView = externalCurrentView || "chat";
   const includeCalendarContext = true;
 
   // Load chat history from localStorage on mount
@@ -35,7 +34,11 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
     if (messages.length > 0) {
       localStorage.setItem("calvin-chat-history", JSON.stringify(messages));
     }
-  }, [messages]);
+    // Notify parent of messages change
+    if (onMessagesChange) {
+      onMessagesChange(messages);
+    }
+  }, [messages, onMessagesChange]);
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -117,45 +120,30 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
     }
   };
 
-  const clearHistory = () => {
-    setMessages([]);
-    localStorage.removeItem("calvin-chat-history");
-  };
-
-  const toggleCalendar = () => {
-    setIsCalendarOpen(!isCalendarOpen);
-  };
 
   return (
-    <>
-      <div className={cn("flex flex-col h-full", className)}>
-        <ChatHeader
-          messageCount={messages.length}
-          onClearHistory={clearHistory}
-          onToggleCalendar={toggleCalendar}
-        />
+    <div className={cn("flex flex-col h-full", className)}>
+      {currentView === "chat" ? (
+        <>
+          <MessagesArea
+            messages={messages}
+            isLoading={isLoading}
+            hasSession={!!session}
+            onSendMessage={sendMessage}
+          />
 
-      <MessagesArea
-        messages={messages}
-        isLoading={isLoading}
-        hasSession={!!session}
-        onSendMessage={sendMessage}
-      />
-
-      <ChatInput
-        inputMessage={inputMessage}
-        isLoading={isLoading}
-        hasSession={!!session}
-        onInputChange={setInputMessage}
-        onSubmit={handleSubmit}
-        onKeyDown={handleKeyDown}
-      />
-      </div>
-      
-      <CalendarSheet
-        open={isCalendarOpen}
-        onOpenChange={setIsCalendarOpen}
-      />
-    </>
+          <ChatInput
+            inputMessage={inputMessage}
+            isLoading={isLoading}
+            hasSession={!!session}
+            onInputChange={setInputMessage}
+            onSubmit={handleSubmit}
+            onKeyDown={handleKeyDown}
+          />
+        </>
+      ) : (
+        <CalendarView />
+      )}
+    </div>
   );
 }

@@ -15,4 +15,6 @@ export interface Message {
 
 export interface ChatInterfaceProps {
   className?: string;
+  currentView?: "chat" | "calendar";
+  onMessagesChange?: (messages: Message[]) => void;
 }
