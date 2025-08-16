@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   CalendarIcon,
-  Clock,     
+  Clock,
   Users,
   TrendingUp,
   RefreshCw,
