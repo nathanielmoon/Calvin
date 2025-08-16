@@ -80,13 +80,10 @@ export const calendarApiRateLimiter = new RateLimiter(5000, 15 * 60 * 1000); // 
 export const chatApiRateLimiter = new RateLimiter(30, 60 * 1000); // 30 requests per minute for chat API
 
 // Cleanup every 5 minutes
-setInterval(
-  () => {
-    calendarApiRateLimiter.cleanup();
-    chatApiRateLimiter.cleanup();
-  },
-  5 * 60 * 1000,
-);
+setInterval(() => {
+  calendarApiRateLimiter.cleanup();
+  chatApiRateLimiter.cleanup();
+}, 5 * 60 * 1000);
 
 export function createRateLimitResponse(resetTime: number) {
   const secondsUntilReset = Math.ceil((resetTime - Date.now()) / 1000);

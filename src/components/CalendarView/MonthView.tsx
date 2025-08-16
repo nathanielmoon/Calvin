@@ -59,14 +59,14 @@ export function MonthView({ currentDate, events }: MonthViewProps) {
                   key={`${weekIndex}-${dayIndex}`}
                   className={cn(
                     "min-h-[120px] border-r border-b p-2 last:border-r-0",
-                    !isCurrentMonth && "bg-muted/20 text-muted-foreground",
+                    !isCurrentMonth && "bg-muted/20 text-muted-foreground"
                   )}
                 >
                   <div
                     className={cn(
                       "text-sm mb-2",
                       isToday &&
-                        "bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center",
+                        "bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center"
                     )}
                   >
                     {format(day, "d")}
@@ -77,7 +77,7 @@ export function MonthView({ currentDate, events }: MonthViewProps) {
                         key={event.id}
                         className={cn(
                           "text-xs p-1 rounded text-white truncate",
-                          event.color || "bg-blue-500",
+                          event.color || "bg-blue-500"
                         )}
                       >
                         {event.title}
@@ -91,7 +91,7 @@ export function MonthView({ currentDate, events }: MonthViewProps) {
                   </div>
                 </div>
               );
-            }),
+            })
           )}
         </div>
       </CardContent>

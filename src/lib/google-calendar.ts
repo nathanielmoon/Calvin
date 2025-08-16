@@ -23,7 +23,7 @@ export class GoogleCalendarClient {
   async getEvents(
     timeMin?: string,
     timeMax?: string,
-    maxResults: number = 250,
+    maxResults: number = 250
   ): Promise<CalendarEvent[]> {
     try {
       const response = await this.calendar.events.list({
@@ -42,14 +42,14 @@ export class GoogleCalendarClient {
       if (get(error, "status") === 401) {
         await signOut({ redirect: true, redirectTo: "/" });
       }
-      console.error("Error fetching calendar events:", {error});
+      console.error("Error fetching calendar events:", { error });
       throw new Error("Failed to fetch calendar events");
     }
   }
 
   async getEventsInDateRange(
     startDate: Date,
-    endDate: Date,
+    endDate: Date
   ): Promise<CalendarEvent[]> {
     return this.getEvents(startDate.toISOString(), endDate.toISOString());
   }
@@ -59,12 +59,12 @@ export class GoogleCalendarClient {
     const startOfDay = new Date(
       today.getFullYear(),
       today.getMonth(),
-      today.getDate(),
+      today.getDate()
     );
     const endOfDay = new Date(
       today.getFullYear(),
       today.getMonth(),
-      today.getDate() + 1,
+      today.getDate() + 1
     );
 
     return this.getEventsInDateRange(startOfDay, endOfDay);
@@ -73,7 +73,7 @@ export class GoogleCalendarClient {
   async getThisWeeksEvents(): Promise<CalendarEvent[]> {
     const today = new Date();
     const startOfWeek = new Date(
-      today.getTime() - today.getDay() * 24 * 60 * 60 * 1000,
+      today.getTime() - today.getDay() * 24 * 60 * 60 * 1000
     );
     const endOfWeek = new Date(startOfWeek.getTime() + 7 * 24 * 60 * 60 * 1000);
 
@@ -120,7 +120,9 @@ export class GoogleCalendarClient {
 
       // Count attendees
       event.attendees?.forEach((attendee) => {
-        const key = `${attendee.email}:${attendee.displayName || attendee.email}`;
+        const key = `${attendee.email}:${
+          attendee.displayName || attendee.email
+        }`;
         attendeeCount[key] = (attendeeCount[key] || 0) + 1;
       });
 
@@ -152,7 +154,7 @@ export class GoogleCalendarClient {
     const todaysEvents = await this.getTodaysEvents();
     const { totalBusyTime } = this.calculateAvailability(
       new Date(),
-      todaysEvents,
+      todaysEvents
     );
     const busyHoursToday = totalBusyTime / 60;
     const freeHoursToday = Math.max(0, 8 - busyHoursToday); // Assuming 8-hour workday
@@ -182,14 +184,14 @@ export class GoogleCalendarClient {
       date.getMonth(),
       date.getDate(),
       9,
-      0,
+      0
     ); // 9 AM
     const endOfDay = new Date(
       date.getFullYear(),
       date.getMonth(),
       date.getDate(),
       17,
-      0,
+      0
     ); // 5 PM
 
     const events = await this.getEventsInDateRange(startOfDay, endOfDay);
@@ -210,14 +212,14 @@ export class GoogleCalendarClient {
       date.getMonth(),
       date.getDate(),
       9,
-      0,
+      0
     );
     const endOfDay = new Date(
       date.getFullYear(),
       date.getMonth(),
       date.getDate(),
       17,
-      0,
+      0
     );
 
     // Get busy slots from events
@@ -233,7 +235,7 @@ export class GoogleCalendarClient {
         };
       })
       .sort(
-        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
       );
 
     // Calculate free slots
@@ -268,11 +270,11 @@ export class GoogleCalendarClient {
 
     const totalBusyTime = busySlots.reduce(
       (total, slot) => total + slot.duration,
-      0,
+      0
     );
     const totalFreeTime = freeSlots.reduce(
       (total, slot) => total + slot.duration,
-      0,
+      0
     );
 
     return {

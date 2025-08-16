@@ -26,7 +26,7 @@ const ChatRequestSchema = z.object({
             processingTime: z.number().optional(),
           })
           .optional(),
-      }),
+      })
     )
     .optional()
     .default([]),
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     if (!session?.accessToken) {
       return NextResponse.json(
         { error: "Unauthorized - Please sign in with Google" },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -65,10 +65,10 @@ export async function POST(request: NextRequest) {
           status: 429,
           headers: {
             "Retry-After": Math.ceil(
-              (rateLimitResult.resetTime! - Date.now()) / 1000,
+              (rateLimitResult.resetTime! - Date.now()) / 1000
             ).toString(),
           },
-        },
+        }
       );
     }
 
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       validatedRequest.message,
       session.accessToken,
       validatedRequest.conversationHistory,
-      validatedRequest.includeCalendarContext,
+      validatedRequest.includeCalendarContext
     );
 
     const processingTime = Date.now() - startTime;
@@ -113,27 +113,27 @@ export async function POST(request: NextRequest) {
           error: "Invalid request format",
           details: error.issues,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     if (error instanceof Error && error.message.includes("invalid_grant")) {
       return NextResponse.json(
         { error: "Authentication expired - Please sign in again" },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
     if (error instanceof Error && error.message.includes("OpenAI")) {
       return NextResponse.json(
         { error: "AI service temporarily unavailable" },
-        { status: 503 },
+        { status: 503 }
       );
     }
 
     return NextResponse.json(
       { error: "Failed to process chat message" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

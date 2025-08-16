@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     if (!session?.accessToken) {
       return NextResponse.json(
         { error: "Unauthorized - Please sign in with Google" },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -28,10 +28,10 @@ export async function GET(request: NextRequest) {
           status: 429,
           headers: {
             "Retry-After": Math.ceil(
-              (rateLimitResult.resetTime! - Date.now()) / 1000,
+              (rateLimitResult.resetTime! - Date.now()) / 1000
             ).toString(),
           },
-        },
+        }
       );
     }
 
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
         events = await calendarClient.getEvents(
           timeMin || undefined,
           timeMax || undefined,
-          maxResults,
+          maxResults
         );
     }
 
@@ -84,14 +84,14 @@ export async function GET(request: NextRequest) {
       ) {
         return NextResponse.json(
           { error: "Authentication expired - Please sign in again" },
-          { status: 401 },
+          { status: 401 }
         );
       }
     }
 
     return NextResponse.json(
       { error: "Failed to fetch calendar events" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

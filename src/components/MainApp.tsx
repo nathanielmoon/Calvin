@@ -36,13 +36,11 @@ export default function MainApp({ session }: MainAppProps) {
     setCurrentView(view);
   };
 
-
-
   return (
     <SessionProvider session={session}>
       <div className="h-screen w-screen flex flex-col bg-background">
         {/* Header */}
-        <Header  />
+        <Header />
 
         {/* Toolbar */}
         <Toolbar

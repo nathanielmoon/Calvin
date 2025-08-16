@@ -14,7 +14,7 @@ interface TodaysEventsProps {
 export function TodaysEvents({ events, loading }: TodaysEventsProps) {
   const formatTime = (
     dateTimeString: string | undefined,
-    dateString: string | undefined,
+    dateString: string | undefined
   ) => {
     if (dateTimeString) {
       return new Date(dateTimeString).toLocaleTimeString([], {

@@ -100,7 +100,9 @@ export function ChatInterface({
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`,
+          content: `Sorry, I encountered an error: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }. Please try again.`,
           timestamp: new Date().toISOString(),
         };
 
@@ -109,7 +111,7 @@ export function ChatInterface({
         setIsLoading(false);
       }
     },
-    [includeCalendarContext, isLoading, messages],
+    [includeCalendarContext, isLoading, messages]
   );
 
   const handleSubmit = (e: React.FormEvent) => {

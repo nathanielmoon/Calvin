@@ -25,7 +25,10 @@ export function CalendarHeader({
       case "week":
         const weekStart = startOfWeek(currentDate);
         const weekEnd = addDays(weekStart, 6);
-        return `${format(weekStart, "MMM d")} - ${format(weekEnd, "MMM d, yyyy")}`;
+        return `${format(weekStart, "MMM d")} - ${format(
+          weekEnd,
+          "MMM d, yyyy"
+        )}`;
       case "month":
         return format(currentDate, "MMMM yyyy");
       default:

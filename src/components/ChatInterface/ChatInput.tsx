@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send } from "lucide-react";
+import { Send, SendHorizonalIcon } from "lucide-react";
 
 interface ChatInputProps {
   inputMessage: string;
@@ -23,29 +23,28 @@ export function ChatInput({
   onKeyDown,
 }: ChatInputProps) {
   return (
-    <div className="p-4 pb-8 md:pb-12">
-      <form onSubmit={onSubmit} className="flex gap-2">
+    <div className="p-4 pb-8 md:pb-12 flex flex-row items-center justify-center">
+      <form onSubmit={onSubmit} className="flex gap-2 relative w-full max-w-4xl">
         <Textarea
           value={inputMessage}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder={
-            hasSession
-              ? "Ask me about your calendar, schedule, or time management..."
-              : "Ask me general questions about time management..."
-          }
-          className="flex-1 min-h-[40px] max-h-[120px] resize-none"
+          placeholder={"Ask me about your calendar ..."}
+          className="flex-1 min-h-[40px] max-h-[120px] resize-none pr-14"
           disabled={isLoading}
         />
 
-        <Button
-          type="submit"
-          size="icon"
-          disabled={!inputMessage.trim() || isLoading}
-          className="h-[40px] w-[40px]"
-        >
-          <Send className="h-4 w-4" />
-        </Button>
+        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+          <Button
+            type="submit"
+            size="icon"
+            disabled={!inputMessage.trim() || isLoading}
+            className="h-[40px] w-[40px]"
+            variant="ghost"
+          >
+            <SendHorizonalIcon className="h-4 w-4" />
+          </Button>
+        </div>
       </form>
     </div>
   );

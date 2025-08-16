@@ -19,7 +19,7 @@ export class CalendarAIService {
     message: string,
     accessToken: string,
     conversationHistory: ChatMessage[] = [],
-    includeCalendarContext: boolean = true,
+    includeCalendarContext: boolean = true
   ): Promise<{
     response: string;
     calendarContext?: ChatCalendarContext;
@@ -38,7 +38,7 @@ export class CalendarAIService {
       systemPrompt,
       conversationHistory,
       message,
-      calendarContext,
+      calendarContext
     );
 
     try {
@@ -55,7 +55,7 @@ export class CalendarAIService {
         "I apologize, but I encountered an error processing your message.";
       const suggestedActions = this.generateSuggestedActions(
         message,
-        calendarContext,
+        calendarContext
       );
 
       return {
@@ -73,7 +73,7 @@ export class CalendarAIService {
     message: string,
     accessToken: string,
     conversationHistory: ChatMessage[] = [],
-    includeCalendarContext: boolean = true,
+    includeCalendarContext: boolean = true
   ): Promise<AsyncIterable<string>> {
     let calendarContext: ChatCalendarContext | undefined;
 
@@ -86,7 +86,7 @@ export class CalendarAIService {
       systemPrompt,
       conversationHistory,
       message,
-      calendarContext,
+      calendarContext
     );
 
     try {
@@ -106,7 +106,7 @@ export class CalendarAIService {
   }
 
   private async getCalendarContext(
-    accessToken: string,
+    accessToken: string
   ): Promise<ChatCalendarContext> {
     const calendarClient = new GoogleCalendarClient(accessToken);
 
@@ -178,7 +178,9 @@ Use this real-time data to provide accurate, personalized responses about the us
               minute: "2-digit",
             })
           : "All day";
-        summary += `- ${time}: ${event.summary}${event.location ? ` (${event.location})` : ""}\n`;
+        summary += `- ${time}: ${event.summary}${
+          event.location ? ` (${event.location})` : ""
+        }\n`;
       });
       summary += "\n";
     } else {
@@ -213,7 +215,9 @@ Use this real-time data to provide accurate, personalized responses about the us
       summary += `WEEKLY SUMMARY:\n`;
       summary += `- Total meetings this week: ${totalEvents}\n`;
       summary += `- Total meeting hours: ${totalMeetingHours.toFixed(1)}h\n`;
-      summary += `- Today: ${busyHoursToday.toFixed(1)}h busy, ${freeHoursToday.toFixed(1)}h free\n\n`;
+      summary += `- Today: ${busyHoursToday.toFixed(
+        1
+      )}h busy, ${freeHoursToday.toFixed(1)}h free\n\n`;
     }
 
     // Availability
@@ -248,7 +252,7 @@ Use this real-time data to provide accurate, personalized responses about the us
     systemPrompt: string,
     conversationHistory: ChatMessage[],
     currentMessage: string,
-    _calendarContext?: ChatCalendarContext,
+    _calendarContext?: ChatCalendarContext
   ): OpenAI.Chat.Completions.ChatCompletionMessageParam[] {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
       { role: "system", content: systemPrompt },
@@ -273,7 +277,7 @@ Use this real-time data to provide accurate, personalized responses about the us
 
   private generateSuggestedActions(
     message: string,
-    _calendarContext?: ChatCalendarContext,
+    _calendarContext?: ChatCalendarContext
   ): SuggestedAction[] {
     const actions: SuggestedAction[] = [];
     const lowerMessage = message.toLowerCase();
@@ -345,7 +349,7 @@ Use this real-time data to provide accurate, personalized responses about the us
           type: "scheduling",
           label: "Find meeting time",
           action: "When would be a good time for a 1-hour meeting this week?",
-        },
+        }
       );
     }
 
@@ -353,7 +357,7 @@ Use this real-time data to provide accurate, personalized responses about the us
   }
 
   private async *createStreamIterator(
-    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>,
+    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>
   ): AsyncIterable<string> {
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content;

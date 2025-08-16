@@ -31,10 +31,10 @@ export function WeekView({ currentDate, events }: WeekViewProps) {
                 {hour === 0
                   ? "12 AM"
                   : hour < 12
-                    ? `${hour} AM`
-                    : hour === 12
-                      ? "12 PM"
-                      : `${hour - 12} PM`}
+                  ? `${hour} AM`
+                  : hour === 12
+                  ? "12 PM"
+                  : `${hour - 12} PM`}
               </div>
             ))}
           </div>
@@ -48,7 +48,7 @@ export function WeekView({ currentDate, events }: WeekViewProps) {
                   className={cn(
                     "text-sm font-medium",
                     isSameDay(day, new Date()) &&
-                      "bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center mx-auto",
+                      "bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center mx-auto"
                   )}
                 >
                   {format(day, "d")}
@@ -72,7 +72,7 @@ export function WeekView({ currentDate, events }: WeekViewProps) {
                       key={event.id}
                       className={cn(
                         "absolute left-1 right-1 rounded p-1 text-xs text-white",
-                        event.color || "bg-blue-500",
+                        event.color || "bg-blue-500"
                       )}
                       style={{ top: `${top}px`, height: `${height}px` }}
                     >

@@ -17,7 +17,7 @@ export function Message({ message, onSendMessage }: MessageProps) {
     <div
       className={cn(
         "flex gap-3",
-        message.role === "user" ? "justify-end" : "justify-start",
+        message.role === "user" ? "justify-end" : "justify-start"
       )}
     >
       {message.role === "assistant" && (
@@ -33,7 +33,7 @@ export function Message({ message, onSendMessage }: MessageProps) {
           "max-w-[80%] p-3",
           message.role === "user"
             ? "bg-primary text-primary-foreground"
-            : "bg-muted",
+            : "bg-muted"
         )}
       >
         <div className="text-sm prose prose-sm max-w-none dark:prose-invert">

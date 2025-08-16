@@ -19,7 +19,7 @@ interface UseCalendarEventsResult {
 
 export function useCalendarEvents(
   currentDate: Date,
-  view: "day" | "week" | "month",
+  view: "day" | "week" | "month"
 ): UseCalendarEventsResult {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -75,13 +75,13 @@ export function useCalendarEvents(
             ? new Date(event.end.dateTime)
             : new Date(event.end.date || ""),
           color: getEventColor(event),
-        }),
+        })
       );
 
       setEvents(transformedEvents);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to fetch calendar events",
+        err instanceof Error ? err.message : "Failed to fetch calendar events"
       );
       setEvents([]);
     } finally {

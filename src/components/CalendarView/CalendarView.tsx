@@ -8,13 +8,14 @@ import { DayView } from "./DayView";
 import { WeekView } from "./WeekView";
 import { MonthView } from "./MonthView";
 import { useCalendarEvents } from "@/hooks/useCalendarEvents";
+import { Skeleton } from "../ui/skeleton";
 
 export default function CalendarView() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>("month");
   const { events, loading, error, refetch } = useCalendarEvents(
     currentDate,
-    view,
+    view
   );
 
   const navigateDate = (direction: "prev" | "next") => {
@@ -76,8 +77,7 @@ export default function CalendarView() {
       <div className="flex-1 p-4 h-full w-full overflow-auto">
         {loading ? (
           <div className="flex items-center justify-center h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            <span className="ml-2">Loading calendar events...</span>
+            <Skeleton className="w-full h-full" />
           </div>
         ) : (
           <>

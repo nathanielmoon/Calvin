@@ -19,7 +19,7 @@ export default function CalendarAnalytics() {
   const [todaysEvents, setTodaysEvents] = useState<CalendarEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
   const [analytics, setAnalytics] = useState<CalendarAnalyticsType | null>(
-    null,
+    null
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +64,7 @@ export default function CalendarAnalytics() {
       setAnalytics(analyticsData);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to load calendar data",
+        err instanceof Error ? err.message : "Failed to load calendar data"
       );
     } finally {
       setLoading(false);

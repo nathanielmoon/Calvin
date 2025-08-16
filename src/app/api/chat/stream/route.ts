@@ -26,7 +26,7 @@ const StreamRequestSchema = z.object({
             processingTime: z.number().optional(),
           })
           .optional(),
-      }),
+      })
     )
     .optional()
     .default([]),
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         {
           status: 401,
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
     }
 
@@ -60,10 +60,10 @@ export async function POST(request: NextRequest) {
           headers: {
             "Content-Type": "application/json",
             "Retry-After": Math.ceil(
-              (rateLimitResult.resetTime! - Date.now()) / 1000,
+              (rateLimitResult.resetTime! - Date.now()) / 1000
             ).toString(),
           },
-        },
+        }
       );
     }
 
@@ -76,7 +76,9 @@ export async function POST(request: NextRequest) {
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          const messageId = `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          const messageId = `msg_${Date.now()}_${Math.random()
+            .toString(36)
+            .substr(2, 9)}`;
 
           // Initialize AI service
           const aiService = new CalendarAIService();
@@ -90,7 +92,7 @@ export async function POST(request: NextRequest) {
             };
 
             controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify(contextChunk)}\n\n`),
+              encoder.encode(`data: ${JSON.stringify(contextChunk)}\n\n`)
             );
           }
 
@@ -99,7 +101,7 @@ export async function POST(request: NextRequest) {
             validatedRequest.message,
             session.accessToken!,
             validatedRequest.conversationHistory,
-            validatedRequest.includeCalendarContext,
+            validatedRequest.includeCalendarContext
           );
 
           // Stream AI response chunks
@@ -111,7 +113,7 @@ export async function POST(request: NextRequest) {
             };
 
             controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify(streamChunk)}\n\n`),
+              encoder.encode(`data: ${JSON.stringify(streamChunk)}\n\n`)
             );
           }
 
@@ -127,7 +129,7 @@ export async function POST(request: NextRequest) {
           };
 
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(doneChunk)}\n\n`),
+            encoder.encode(`data: ${JSON.stringify(doneChunk)}\n\n`)
           );
 
           controller.close();
@@ -142,7 +144,7 @@ export async function POST(request: NextRequest) {
           };
 
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(errorChunk)}\n\n`),
+            encoder.encode(`data: ${JSON.stringify(errorChunk)}\n\n`)
           );
 
           controller.close();
@@ -172,7 +174,7 @@ export async function POST(request: NextRequest) {
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
-        },
+        }
       );
     }
 
@@ -181,7 +183,7 @@ export async function POST(request: NextRequest) {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      },
+      }
     );
   }
 }

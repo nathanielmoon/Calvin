@@ -29,10 +29,10 @@ export function DayView({ currentDate, events }: DayViewProps) {
                 {hour === 0
                   ? "12 AM"
                   : hour < 12
-                    ? `${hour} AM`
-                    : hour === 12
-                      ? "12 PM"
-                      : `${hour - 12} PM`}
+                  ? `${hour} AM`
+                  : hour === 12
+                  ? "12 PM"
+                  : `${hour - 12} PM`}
               </div>
             ))}
           </div>
@@ -54,7 +54,7 @@ export function DayView({ currentDate, events }: DayViewProps) {
                   key={event.id}
                   className={cn(
                     "absolute left-1 right-1 rounded p-1 text-xs text-white",
-                    event.color || "bg-blue-500",
+                    event.color || "bg-blue-500"
                   )}
                   style={{ top: `${top}px`, height: `${height}px` }}
                 >
