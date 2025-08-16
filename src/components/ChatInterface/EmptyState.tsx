@@ -46,7 +46,7 @@ export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
           {suggestions.map((suggestion) => (
             <Button
               key={suggestion}
-              variant="outline"
+              variant="ghost"
               size="sm"
               className="text-left justify-start h-auto py-2 px-3 whitespace-normal"
               onClick={() => onSendMessage(suggestion)}

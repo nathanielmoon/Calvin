@@ -33,7 +33,7 @@ export function ChatInput({
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder={"Ask me about your calendar ..."}
-          className="flex-1 min-h-[40px] max-h-[120px] resize-none pr-14"
+          className="flex-1 min-h-[40px] max-h-[120px] resize-none pr-14 bg-white rounded-full py-3 px-4 shadow-lg"
           disabled={isLoading}
         />
 

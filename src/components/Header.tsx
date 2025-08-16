@@ -10,7 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Calendar, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
+import Image from "next/image";
+import { cn } from "../lib/utils";
+import { titleFont } from "../fonts";
 
 interface HeaderProps {
   onNewConversation?: () => void;
@@ -24,8 +27,8 @@ export default function Header({ onNewConversation }: HeaderProps) {
       <div className="flex h-16 items-center justify-between px-6">
         {/* Logo/Brand */}
         <div className="flex items-center gap-2">
-          <Calendar className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Calvin</span>
+          <Image src="/images/logo.png" alt="Calvin" width={32} height={32} className="-translate-y-[2px]" />
+          <span className={cn(titleFont.className, "text-3xl font-extrabold ml-1")}>Calvin</span>
         </div>
 
         {/* Navigation - Keep minimal */}
