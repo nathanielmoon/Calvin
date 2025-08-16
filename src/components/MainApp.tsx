@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import { Toolbar } from "@/components/Toolbar";
 import { Message } from "@/components/ChatInterface/types";
 import type { Session } from "next-auth";
-import { CalendarAnalyticsSheet } from "./CalendarAnalyticsSheet";
+import CalendarAnalytics from "./CalendarAnalytics/CalendarAnalytics";
 import { ContentContainer } from "./ContentContainer";
 
 interface MainAppProps {
@@ -15,9 +15,8 @@ interface MainAppProps {
 }
 
 export default function MainApp({ session }: MainAppProps) {
-  const [currentView, setCurrentView] = useState<"chat" | "calendar">("chat");
+  const [currentView, setCurrentView] = useState<"chat" | "calendar" | "analytics">("chat");
   const [messages, setMessages] = useState<Message[]>([]);
-  const [calendarAnalyticsOpen, setCalendarAnalyticsOpen] = useState(false);
   const handleNewConversation = () => {
     // Clear chat history
     localStorage.removeItem("calvin-chat-history");
@@ -31,12 +30,8 @@ export default function MainApp({ session }: MainAppProps) {
     localStorage.removeItem("calvin-chat-history");
   };
 
-  const handleViewToggle = (view: "chat" | "calendar") => {
+  const handleViewToggle = (view: "chat" | "calendar" | "analytics") => {
     setCurrentView(view);
-  };
-
-  const onCalendarAnalyticsToggle = () => {
-    setCalendarAnalyticsOpen(!calendarAnalyticsOpen);
   };
 
   return (
@@ -51,23 +46,20 @@ export default function MainApp({ session }: MainAppProps) {
           currentView={currentView}
           onClearHistory={clearHistory}
           onViewToggle={handleViewToggle}
-          onCalendarAnalyticsToggle={onCalendarAnalyticsToggle}
         />
 
         {/* Main Content Area */}
         <ContentContainer>
-          {/* Chat Interface - Full Width */}
-          <ChatInterface
-            className="flex-1"
-            currentView={currentView}
-            onMessagesChange={setMessages}
-          />
+          {currentView === "analytics" ? (
+            <CalendarAnalytics />
+          ) : (
+            <ChatInterface
+              className="flex-1"
+              currentView={currentView}
+              onMessagesChange={setMessages}
+            />
+          )}
         </ContentContainer>
-
-        <CalendarAnalyticsSheet
-          open={calendarAnalyticsOpen}
-          onOpenChange={setCalendarAnalyticsOpen}
-        />
       </div>
     </SessionProvider>
   );

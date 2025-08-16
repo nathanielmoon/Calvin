@@ -23,7 +23,7 @@ export function ChatInput({
   onKeyDown,
 }: ChatInputProps) {
   return (
-    <div className="p-4 border-t">
+    <div className="p-4 pb-8 md:pb-12">
       <form onSubmit={onSubmit} className="flex gap-2">
         <Textarea
           value={inputMessage}

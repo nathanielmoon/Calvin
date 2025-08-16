@@ -76,7 +76,7 @@ class RateLimiter {
 }
 
 // Global rate limiter instances
-export const calendarApiRateLimiter = new RateLimiter(50, 15 * 60 * 1000); // 50 requests per 15 minutes for calendar APIs
+export const calendarApiRateLimiter = new RateLimiter(5000, 15 * 60 * 1000); // 5000 requests per 15 minutes for calendar APIs
 export const chatApiRateLimiter = new RateLimiter(30, 60 * 1000); // 30 requests per minute for chat API
 
 // Cleanup every 5 minutes

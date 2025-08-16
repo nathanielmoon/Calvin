@@ -6,10 +6,9 @@ import { MessageSquare, Calendar, BarChart3 } from "lucide-react";
 
 interface ToolbarProps {
   messageCount: number;
-  currentView: "chat" | "calendar";
+  currentView: "chat" | "calendar" | "analytics";
   onClearHistory: () => void;
-  onViewToggle: (view: "chat" | "calendar") => void;
-  onCalendarAnalyticsToggle: () => void;
+  onViewToggle: (view: "chat" | "calendar" | "analytics") => void;
 }
 
 export function Toolbar({
@@ -17,7 +16,6 @@ export function Toolbar({
   currentView,
   onClearHistory,
   onViewToggle,
-  onCalendarAnalyticsToggle,
 }: ToolbarProps) {
   return (
     <div className="flex items-center justify-center px-4">
@@ -39,6 +37,14 @@ export function Toolbar({
           >
             <Calendar className="h-4 w-4" />
           </Button>
+          <Button
+            variant={currentView === "analytics" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => onViewToggle("analytics")}
+            className="flex items-center gap-2"
+          >
+            <BarChart3 className="h-4 w-4" />
+          </Button>
         </div>
 
         <div className="flex items-center gap-2">
@@ -47,14 +53,6 @@ export function Toolbar({
               Clear History
             </Button>
           )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onCalendarAnalyticsToggle}
-            className="flex items-center gap-2"
-          >
-            <BarChart3 className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </div>
