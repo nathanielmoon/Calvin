@@ -97,9 +97,8 @@ export default function CalendarContextPanel() {
 
   return (
     <div className="p-4 space-y-4 h-full overflow-y-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold">Calendar Context</h3>
+      {/* Refresh Button */}
+      <div className="flex justify-end">
         <Button
           variant="ghost"
           size="sm"

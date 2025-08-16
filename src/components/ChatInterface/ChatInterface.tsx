@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { ChatHeader } from "./ChatHeader";
 import { MessagesArea } from "./MessagesArea";
 import { ChatInput } from "./ChatInput";
+import { CalendarSheet } from "../CalendarSheet";
 import { Message, ChatInterfaceProps } from "./types";
 
 export function ChatInterface({ className }: ChatInterfaceProps) {
@@ -13,6 +14,7 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const includeCalendarContext = true;
 
   // Load chat history from localStorage on mount
@@ -120,12 +122,18 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
     localStorage.removeItem("calvin-chat-history");
   };
 
+  const toggleCalendar = () => {
+    setIsCalendarOpen(!isCalendarOpen);
+  };
+
   return (
-    <div className={cn("flex flex-col h-full", className)}>
-      <ChatHeader
-        messageCount={messages.length}
-        onClearHistory={clearHistory}
-      />
+    <>
+      <div className={cn("flex flex-col h-full", className)}>
+        <ChatHeader
+          messageCount={messages.length}
+          onClearHistory={clearHistory}
+          onToggleCalendar={toggleCalendar}
+        />
 
       <MessagesArea
         messages={messages}
@@ -142,6 +150,12 @@ export function ChatInterface({ className }: ChatInterfaceProps) {
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       />
-    </div>
+      </div>
+      
+      <CalendarSheet
+        open={isCalendarOpen}
+        onOpenChange={setIsCalendarOpen}
+      />
+    </>
   );
 }

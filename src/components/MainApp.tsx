@@ -4,7 +4,6 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import ChatInterface from "@/components/ChatInterface";
 import Header from "@/components/Header";
-import CalendarContextPanel from "@/components/CalendarContextPanel";
 
 interface MainAppProps {
   session: any;
@@ -26,15 +25,8 @@ export default function MainApp({ session }: MainAppProps) {
 
         {/* Main Content Area */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Chat Interface - Primary Focus */}
-          <div className="flex-1 flex flex-col min-w-0">
-            <ChatInterface className="flex-1" />
-          </div>
-
-          {/* Calendar Context Panel */}
-          <div className="w-80 border-l bg-muted/30">
-            <CalendarContextPanel />
-          </div>
+          {/* Chat Interface - Full Width */}
+          <ChatInterface className="flex-1" />
         </div>
       </div>
     </SessionProvider>
