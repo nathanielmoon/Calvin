@@ -40,7 +40,7 @@ export default function MainApp({ session }: MainAppProps) {
 
   return (
     <SessionProvider session={session}>
-      <div className="h-screen flex flex-col bg-background">
+      <div className="min-h-screen flex flex-col bg-background">
         {/* Header */}
         <Header onNewConversation={handleNewConversation} />
 
@@ -56,7 +56,7 @@ export default function MainApp({ session }: MainAppProps) {
         {/* Main Content Area */}
         <div className="flex flex-1 overflow-hidden">
           {/* Chat Interface - Full Width */}
-          <ChatInterface 
+          <ChatInterface
             className="flex-1"
             currentView={currentView}
             onMessagesChange={setMessages}

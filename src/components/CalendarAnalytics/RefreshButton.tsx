@@ -14,7 +14,8 @@ export function RefreshButton({ onRefresh, loading }: RefreshButtonProps) {
   return (
     <div className="flex justify-center">
       <Button variant="ghost" size="sm" onClick={onRefresh} disabled={loading}>
-        Refresh <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
+        Refresh{" "}
+        <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
       </Button>
     </div>
   );

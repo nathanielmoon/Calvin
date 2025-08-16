@@ -8,7 +8,11 @@ import { ChatInput } from "./ChatInput";
 import CalendarView from "../CalendarView";
 import { Message, ChatInterfaceProps } from "./types";
 
-export function ChatInterface({ className, currentView: externalCurrentView, onMessagesChange }: ChatInterfaceProps) {
+export function ChatInterface({
+  className,
+  currentView: externalCurrentView,
+  onMessagesChange,
+}: ChatInterfaceProps) {
   const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -119,7 +123,6 @@ export function ChatInterface({ className, currentView: externalCurrentView, onM
       sendMessage(inputMessage);
     }
   };
-
 
   return (
     <div className={cn("flex flex-col h-full", className)}>

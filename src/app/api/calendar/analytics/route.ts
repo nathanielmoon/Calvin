@@ -92,11 +92,20 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Calendar analytics API error:", error);
 
-    if (error instanceof Error && error.message.includes("invalid_grant")) {
-      return NextResponse.json(
-        { error: "Authentication expired - Please sign in again" },
-        { status: 401 },
-      );
+    // Handle various authentication errors
+    if (error instanceof Error) {
+      const errorMessage = error.message.toLowerCase();
+      if (
+        errorMessage.includes("invalid_grant") ||
+        errorMessage.includes("invalid authentication credentials") ||
+        errorMessage.includes("expected oauth 2 access token") ||
+        errorMessage.includes("authentication credential")
+      ) {
+        return NextResponse.json(
+          { error: "Authentication expired - Please sign in again" },
+          { status: 401 },
+        );
+      }
     }
 
     return NextResponse.json(

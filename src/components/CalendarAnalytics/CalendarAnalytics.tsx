@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarIcon } from "lucide-react";
 import {
@@ -37,6 +37,17 @@ export default function CalendarAnalytics() {
           fetch("/api/calendar/events?preset=upcoming&count=5"),
           fetch("/api/calendar/analytics?preset=today"),
         ]);
+
+      // Check for authentication errors and auto-logout
+      if (
+        todaysResponse.status === 401 ||
+        upcomingResponse.status === 401 ||
+        analyticsResponse.status === 401
+      ) {
+        console.log("Authentication failed, signing out user");
+        await signOut({ callbackUrl: "/" });
+        return;
+      }
 
       if (!todaysResponse.ok || !upcomingResponse.ok || !analyticsResponse.ok) {
         throw new Error("Failed to fetch calendar data");
