@@ -7,7 +7,7 @@ import {
   CalendarAvailability,
   AvailabilitySlot,
 } from "@/types/calendar";
-import { auth, signOut } from "../auth";
+import { signOut } from "../auth";
 import get from "lodash.get";
 
 export class GoogleCalendarClient {

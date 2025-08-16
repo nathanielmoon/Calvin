@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, SendHorizonalIcon } from "lucide-react";
+import { SendHorizonalIcon } from "lucide-react";
 
 interface ChatInputProps {
   inputMessage: string;
@@ -24,7 +24,10 @@ export function ChatInput({
 }: ChatInputProps) {
   return (
     <div className="p-4 pb-8 md:pb-12 flex flex-row items-center justify-center">
-      <form onSubmit={onSubmit} className="flex gap-2 relative w-full max-w-4xl">
+      <form
+        onSubmit={onSubmit}
+        className="flex gap-2 relative w-full max-w-4xl"
+      >
         <Textarea
           value={inputMessage}
           onChange={(e) => onInputChange(e.target.value)}

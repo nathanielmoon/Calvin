@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Calendar, LogOut, Plus } from "lucide-react";
+import { Calendar, LogOut } from "lucide-react";
 
 interface HeaderProps {
   onNewConversation?: () => void;
