@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import CalendarContextPanel from "@/components/CalendarContextPanel";
+import { CalendarAnalytics } from "@/components/CalendarAnalytics";
 
 interface CalendarSheetProps {
   open: boolean;
@@ -22,7 +22,7 @@ export function CalendarSheet({ open, onOpenChange }: CalendarSheetProps) {
           <SheetTitle>Calendar Context</SheetTitle>
         </SheetHeader>
         <div className="flex-1 overflow-hidden">
-          <CalendarContextPanel />
+          <CalendarAnalytics />
         </div>
       </SheetContent>
     </Sheet>

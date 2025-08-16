@@ -1,0 +1,102 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarIcon } from "lucide-react";
+import { CalendarEvent, CalendarAnalytics as CalendarAnalyticsType } from "@/types/calendar";
+import { TodaysSummary } from "./TodaysSummary";
+import { TodaysEvents } from "./TodaysEvents";
+import { UpcomingEvents } from "./UpcomingEvents";
+import { WeeklyStats } from "./WeeklyStats";
+import { RefreshButton } from "./RefreshButton";
+
+export default function CalendarAnalytics() {
+  const { data: session } = useSession();
+  const [todaysEvents, setTodaysEvents] = useState<CalendarEvent[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
+  const [analytics, setAnalytics] = useState<CalendarAnalyticsType | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchCalendarData = async () => {
+    if (!session?.accessToken) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const [todaysResponse, upcomingResponse, analyticsResponse] =
+        await Promise.all([
+          fetch("/api/calendar/events?preset=today"),
+          fetch("/api/calendar/events?preset=upcoming&count=5"),
+          fetch("/api/calendar/analytics?preset=today"),
+        ]);
+
+      if (!todaysResponse.ok || !upcomingResponse.ok || !analyticsResponse.ok) {
+        throw new Error("Failed to fetch calendar data");
+      }
+
+      const [todaysData, upcomingData, analyticsData] = await Promise.all([
+        todaysResponse.json(),
+        upcomingResponse.json(),
+        analyticsResponse.json(),
+      ]);
+
+      setTodaysEvents(todaysData.events || []);
+      setUpcomingEvents(upcomingData.events || []);
+      setAnalytics(analyticsData);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to load calendar data",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCalendarData();
+  }, [session]);
+
+  if (!session) {
+    return (
+      <div className="p-4">
+        <Card>
+          <CardContent className="p-4 text-center">
+            <CalendarIcon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+            <p className="text-sm text-muted-foreground">
+              Sign in to view your calendar
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 space-y-4 h-full overflow-y-auto">
+      <RefreshButton onRefresh={fetchCalendarData} loading={loading} />
+
+      {error && (
+        <Card className="border-destructive/50">
+          <CardContent className="p-3">
+            <p className="text-sm text-destructive">{error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      <TodaysSummary 
+        analytics={analytics} 
+        loading={loading} 
+        todaysEventsCount={todaysEvents.length} 
+      />
+
+      <TodaysEvents events={todaysEvents} loading={loading} />
+
+      <UpcomingEvents events={upcomingEvents} loading={loading} />
+
+      {analytics && <WeeklyStats analytics={analytics} />}
+    </div>
+  );
+}
