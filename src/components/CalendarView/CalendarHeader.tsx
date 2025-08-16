@@ -34,12 +34,12 @@ export function CalendarHeader({
   };
 
   return (
-    <div className="flex items-center justify-between p-4 border-b">
+    <div className="flex flex-col items-start md:flex-row md:items-center justify-between gap-4 p-4 border-b">
       <div className="flex items-center gap-4">
         <h2 className="text-2xl font-semibold">{getViewTitle()}</h2>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-2">
         <div className="flex items-center border rounded-lg">
           <Button
             variant={view === "day" ? "default" : "ghost"}
@@ -47,7 +47,7 @@ export function CalendarHeader({
             onClick={() => onViewChange("day")}
             className="rounded-r-none border-r"
           >
-            <List className="w-4 h-4" />
+            <List className="w-4 h-4 hidden md:inline-block" />
             Day
           </Button>
           <Button
@@ -56,7 +56,7 @@ export function CalendarHeader({
             onClick={() => onViewChange("week")}
             className="rounded-none border-r"
           >
-            <Clock className="w-4 h-4" />
+            <Clock className="w-4 h-4 hidden md:inline-block" />
             Week
           </Button>
           <Button
@@ -65,7 +65,7 @@ export function CalendarHeader({
             onClick={() => onViewChange("month")}
             className="rounded-l-none"
           >
-            <Calendar className="w-4 h-4" />
+            <Calendar className="w-4 h-4 hidden md:inline-block" />
             Month
           </Button>
         </div>

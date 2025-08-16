@@ -68,7 +68,7 @@ export default function CalendarView() {
         onToday={handleToday}
       />
 
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 h-full w-full overflow-auto">
         {loading ? (
           <div className="flex items-center justify-center h-full">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>

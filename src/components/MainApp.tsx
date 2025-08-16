@@ -40,7 +40,7 @@ export default function MainApp({ session }: MainAppProps) {
 
   return (
     <SessionProvider session={session}>
-      <div className="min-h-screen flex flex-col bg-background">
+      <div className="h-screen w-screen flex flex-col bg-background">
         {/* Header */}
         <Header onNewConversation={handleNewConversation} />
 

@@ -13,3 +13,5 @@ description: Commit and push code to remote.
 ## Your task
 
 Based on the above changes, create a single git commit with a thoughtful but concise summary of the changes.
+
+Do not push changes.
