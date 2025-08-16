@@ -7,7 +7,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 
-export function LandingPage() {
+export default function LandingPage() {
   return (
     <div className="p-6 flex items-center justify-center min-h-screen">
       <Card className="max-w-md w-full">
