@@ -49,7 +49,7 @@ export function Toolbar({
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 delay-100 opacity-0 animate-fade-in-right">
+        <div className="flex items-center gap-2 delay-200 opacity-0 animate-fade-in-right">
           {
             <Button
               variant="ghost"
