@@ -13,8 +13,9 @@ import { TodaysEvents } from "./TodaysEvents";
 import { UpcomingEvents } from "./UpcomingEvents";
 import { WeeklyStats } from "./WeeklyStats";
 import { RefreshButton } from "./RefreshButton";
+import { cn } from "../../lib/utils";
 
-export default function CalendarAnalytics() {
+export default function CalendarAnalytics({ className }: { className?: string }) {
   const { data: session } = useSession();
   const [todaysEvents, setTodaysEvents] = useState<CalendarEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
@@ -77,7 +78,7 @@ export default function CalendarAnalytics() {
 
   if (!session) {
     return (
-      <div className="p-4">
+      <div className={cn("p-4", className)}>
         <Card>
           <CardContent className="p-4 text-center">
             <CalendarIcon className="h-8 w-8 text-muted-foreground mx-auto mb-2" />

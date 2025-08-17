@@ -3,9 +3,10 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Card } from "@/components/ui/card";
-import { Bot, User } from "lucide-react";
+import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message as MessageType } from "./types";
+import Image from "next/image";
 
 interface MessageProps {
   message: MessageType;
@@ -23,7 +24,7 @@ export function Message({ message, onSendMessage }: MessageProps) {
       {message.role === "assistant" && (
         <div className="flex-shrink-0">
           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <Bot className="h-4 w-4 text-primary" />
+            <Image src="/images/logo.png" alt="Calvin" width={32} height={32} />
           </div>
         </div>
       )}

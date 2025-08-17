@@ -54,7 +54,7 @@ export default function MainApp({ session }: MainAppProps) {
         {/* Main Content Area */}
         <ContentContainer>
           {currentView === "analytics" ? (
-            <CalendarAnalytics />
+            <CalendarAnalytics className="pt-8" />
           ) : (
             <ChatInterface
               className="flex-1"
