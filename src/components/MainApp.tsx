@@ -20,7 +20,6 @@ export default function MainApp({ session }: MainAppProps) {
   >("chat");
 
   const clearHistory = () => {
-    // TODO: Clear history
     localStorage.removeItem("calvin-chat-history");
     setTicker(ticker % 2 === 0 ? ticker + 1 : ticker - 1);
   };

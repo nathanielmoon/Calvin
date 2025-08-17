@@ -31,7 +31,7 @@ export default function Header() {
             className="-translate-y-[2px]"
           />
           <span
-            className={cn(titleFont.className, "text-2xl font-extrabold ml-1")}
+            className={cn(titleFont.className, "text-2xl font-extrabold ml-1 text-muted-foreground/80")}
           >
             CALVIN
           </span>
