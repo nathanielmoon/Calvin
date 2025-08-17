@@ -41,7 +41,47 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-fade-in-up: fadeInUp 0.4s ease-in-out forwards;
+  @keyframes fadeInUp {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-fade-in-left: fadeInLeft 0.4s ease-in-out forwards;
+  @keyframes fadeInLeft {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-fade-in-right: fadeInRight 0.4s ease-in-out forwards;
+  @keyframes fadeInRight {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
+
 
 :root {
   --radius: 0.625rem;

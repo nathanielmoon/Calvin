@@ -6,7 +6,7 @@ export function Title() {
     <h1
       className={cn(
         titleFont.className,
-        "text-[6rem] sm:text-[10rem] md:text-[12rem] font-bold z-10 text-center leading-none tracking-wide"
+        "text-[6rem] sm:text-[10rem] md:text-[12rem] font-bold z-10 text-center leading-none tracking-wide opacity-0 delay-100 animate-fade-in-up"
       )}
     >
       Calvin

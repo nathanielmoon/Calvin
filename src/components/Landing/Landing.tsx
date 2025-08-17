@@ -7,7 +7,7 @@ import Header from "../Header";
 
 export default function Landing() {
   return (
-    <div className="p-2 md:p-6 flex-col items-center justify-start min-h-screen w-screen bg-[#f8f8f8]">
+    <div className="p-2 md:p-6 flex-col items-center justify-start min-h-screen w-screen">
       <Header />
       <div className="relative flex flex-col items-center justify-center gap-2 w-full mt-4">
         <HeroImage />

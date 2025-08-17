@@ -22,7 +22,7 @@ export function Toolbar({
   return (
     <div className="flex items-center justify-center px-4 shadow-lg sm:shadow-none pb-2">
       <div className="flex flex-row items-center gap-2 w-full max-w-7xl justify-between">
-        <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-muted rounded-lg p-1 opacity-0 animate-fade-in-left">
           <Button
             variant={currentView === "chat" ? "default" : "ghost"}
             size="sm"
@@ -49,7 +49,7 @@ export function Toolbar({
           </Button>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 delay-100 opacity-0 animate-fade-in-right">
           {
             <Button
               variant="ghost"
