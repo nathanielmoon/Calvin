@@ -6,7 +6,7 @@ import { titleFont } from "../../fonts";
 
 export function SubTitle() {
   return (
-    <div className="h-20 opacity-0 delay-200 animate-fade-in-up">
+    <div className="h-20 opacity-0 delay-400 animate-fade-in-up">
       <TypeAnimation
         sequence={[
           "I'm Calvin, your calendar assistant",

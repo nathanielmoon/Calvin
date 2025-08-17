@@ -38,7 +38,7 @@ function GoogleIcon({ className }: { className?: string }) {
 
 export function SignInButton() {
   return (
-    <div className="w-full max-w-[400px] opacity-0 delay-300 animate-fade-in">
+    <div className="w-full max-w-[400px] opacity-0 delay-700 animate-fade-in">
       <Button
         onClick={() => signIn("google")}
         variant="ghost"
