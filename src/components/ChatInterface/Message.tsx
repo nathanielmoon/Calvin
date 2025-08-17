@@ -21,7 +21,9 @@ function MarkdownEventComponent({
     <div className="flex flex-col gap-1 bg-gray-200 rounded-lg p-2 font-normal font-sans my-2 min-w-[200px] max-w-[300px] w-full">
       <p className="font-bold break-words whitespace-break-spaces">{summary}</p>
       <div className="flex gap-1 text-sm">
-        <p>{start}</p>-<p>{end}</p>
+        <p>{start?.trim() === "" ? "TBD" : start}</p>
+        {end?.trim() !== "" && " - "}
+        <p>{end?.trim() !== "" && end}</p>
       </div>
     </div>
   );

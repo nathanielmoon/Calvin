@@ -17,6 +17,7 @@ export interface ChatMessage {
 }
 
 export interface ChatCalendarContext {
+  eventsYesterday?: CalendarEvent[];
   eventsToday: CalendarEvent[];
   upcomingEvents: CalendarEvent[];
   analytics?: CalendarAnalytics;

@@ -112,15 +112,25 @@ export class CalendarAIService {
     const calendarClient = new GoogleCalendarClient(accessToken);
 
     try {
-      const [eventsToday, upcomingEvents, analytics] = await Promise.all([
-        calendarClient.getTodaysEvents(),
-        calendarClient.getUpcomingEvents(5),
-        calendarClient.generateAnalytics(),
-      ]);
+      // Calculate yesterday's date range
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      yesterday.setHours(0, 0, 0, 0);
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      const [eventsYesterday, eventsToday, upcomingEvents, analytics] =
+        await Promise.all([
+          calendarClient.getEventsInDateRange(yesterday, todayStart),
+          calendarClient.getTodaysEvents(),
+          calendarClient.getUpcomingEvents(5),
+          calendarClient.generateAnalytics(),
+        ]);
 
       const availability = await calendarClient.getAvailability(new Date());
 
       return {
+        eventsYesterday,
         eventsToday,
         upcomingEvents,
         analytics,
@@ -203,6 +213,26 @@ Use this real-time data to provide accurate, personalized responses about the us
     tomorrow.setHours(0, 0, 0, 0);
     const dayAfterTomorrow = new Date(tomorrow);
     dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 1);
+
+    // Yesterday's events
+    if (context.eventsYesterday && context.eventsYesterday.length > 0) {
+      summary += `YESTERDAY'S SCHEDULE (${context.eventsYesterday.length} events):\n`;
+      context.eventsYesterday.forEach((event) => {
+        const eventTime = event.start.dateTime
+          ? new Date(event.start.dateTime)
+          : null;
+        const time = eventTime
+          ? eventTime.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            })
+          : "All day";
+        summary += `- [DONE] ${time}: ${event.summary}${
+          event.location ? ` (${event.location})` : ""
+        }\n`;
+      });
+      summary += "\n";
+    }
 
     // Today's events
     if (context.eventsToday.length > 0) {
