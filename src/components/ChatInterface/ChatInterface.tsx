@@ -127,12 +127,7 @@ export function ChatInterface({
   };
 
   return (
-    <div
-      className={cn(
-        "flex flex-col h-full animate-in fade-in duration-300",
-        className
-      )}
-    >
+    <div className={cn("flex flex-col h-full animate-in fade-in duration-300", className)}>
       {currentView === "chat" ? (
         <>
           <MessagesArea

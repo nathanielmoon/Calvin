@@ -15,21 +15,22 @@ interface MainAppProps {
 }
 
 export default function MainApp({ session }: MainAppProps) {
+  const [ticker, setTicker] = useState(2);
   const [currentView, setCurrentView] = useState<
     "chat" | "calendar" | "analytics"
   >("chat");
   const [messages, setMessages] = useState<Message[]>([]);
-  const handleNewConversation = () => {
-    // Clear chat history
-    localStorage.removeItem("calvin-chat-history");
-    setMessages([]);
-    // Force a re-render by reloading the page (simple approach)
-    window.location.reload();
-  };
+
 
   const clearHistory = () => {
     setMessages([]);
     localStorage.removeItem("calvin-chat-history");
+    setTicker(ticker % 2 === 0 ? ticker + 1 : ticker - 1);
+  };
+
+  const handleNewConversation = () => {
+    clearHistory();
+    setCurrentView("chat");
   };
 
   const handleViewToggle = (view: "chat" | "calendar" | "analytics") => {
@@ -60,6 +61,7 @@ export default function MainApp({ session }: MainAppProps) {
               className="flex-1"
               currentView={currentView}
               onMessagesChange={setMessages}
+              key={ticker}
             />
           )}
         </ContentContainer>
