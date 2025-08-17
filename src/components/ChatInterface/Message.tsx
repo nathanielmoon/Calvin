@@ -18,7 +18,7 @@ function MarkdownEventComponent({
   end: string;
 }) {
   return (
-    <div className="flex flex-col gap-1 bg-gray-200 rounded-lg p-2 font-normal font-sans my-2 max-w-[300px]">
+    <div className="flex flex-col gap-1 bg-gray-200 rounded-lg p-2 font-normal font-sans my-2 min-w-[200px] max-w-[300px] w-full">
       <p className="font-bold break-words whitespace-break-spaces">{summary}</p>
       <div className="flex gap-1 text-sm">
         <p>{start}</p>
@@ -72,7 +72,6 @@ const mdComponents = {
 
 interface MessageProps {
   message: MessageType;
-  onSendMessage: (content: string) => void;
 }
 
 export function Message({ message }: MessageProps) {
@@ -101,8 +100,7 @@ export function Message({ message }: MessageProps) {
       >
         <div
           className={cn(
-            "text-sm prose prose-sm max-w-none dark:prose-invert",
-            message.role === "user" && "text-right"
+            "text-sm prose prose-sm max-w-none dark:prose-invert"
           )}
         >
           {message.role === "assistant" ? (

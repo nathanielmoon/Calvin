@@ -5,27 +5,19 @@ import { Button } from "@/components/ui/button";
 import { cn } from "../../lib/utils";
 import { titleFont } from "../../fonts";
 
+const suggestions = [
+  "How busy am I today?",
+  "When am I free today?",
+  "What's coming up this week?",
+"I have three meetings I need to schedule with Joe, Dan, and Sally. I really want to block my mornings off to work out, so can you write me an email draft I can share with each of them?"
+];
+
 interface EmptyStateProps {
   hasSession: boolean;
   onSendMessage: (content: string) => void;
 }
 
 export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
-  const suggestions = hasSession
-    ? [
-        "How busy am I today?",
-        "What's coming up this week?",
-        "Analyze my meeting patterns",
-        "When am I free today?",
-        "Show me my schedule overview",
-      ]
-    : [
-        "How can I manage my time better?",
-        "Tips for scheduling meetings",
-        "What makes a good calendar system?",
-        "How to reduce meeting fatigue?",
-      ];
-
   return (
     <div className="text-center mt-6 md:mt-12">
       <h3
@@ -55,7 +47,7 @@ export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
               key={suggestion}
               variant="ghost"
               size="sm"
-              className="text-left justify-start h-auto py-2 px-3 whitespace-normal"
+              className="text-left justify-start items-start h-auto py-2 px-3 whitespace-normal"
               onClick={() => onSendMessage(suggestion)}
             >
               <span className="mr-1">&gt; </span>

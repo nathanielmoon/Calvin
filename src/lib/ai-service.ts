@@ -73,7 +73,8 @@ export class CalendarAIService {
     message: string,
     accessToken: string,
     conversationHistory: ChatMessage[] = [],
-    includeCalendarContext: boolean = true
+    includeCalendarContext: boolean = true,
+    timestamp?: string
   ): Promise<AsyncIterable<string>> {
     let calendarContext: ChatCalendarContext | undefined;
 
@@ -81,7 +82,7 @@ export class CalendarAIService {
       calendarContext = await this.getCalendarContext(accessToken);
     }
 
-    const systemPrompt = this.buildSystemPrompt(calendarContext);
+    const systemPrompt = this.buildSystemPrompt(calendarContext, timestamp);
     const messages = this.buildConversationMessages(
       systemPrompt,
       conversationHistory,
@@ -137,8 +138,11 @@ export class CalendarAIService {
     }
   }
 
-  private buildSystemPrompt(calendarContext?: ChatCalendarContext): string {
+  private buildSystemPrompt(calendarContext?: ChatCalendarContext, timestamp?: string): string {
+    
     const basePrompt = `
+${timestamp ? `The current time is ${timestamp}.` : ""}
+
 You are Calvin, an intelligent calendar assistant powered by real-time Google Calendar data. You help users understand their schedule, manage their time, and make informed decisions about their calendar.
 
 Your capabilities include:
@@ -161,6 +165,11 @@ When presenting calendar events in your responses, you can use a special markdow
 
 This will render as a formatted event component. Use this format when displaying individual events to the user for better readability.
 
+If you are asked to draft one or more emails:
+- Draft the emails separately
+- Make them concise
+- Recommend times for meetings based on the user's availability
+
 Always provide helpful, concise, and actionable responses. Use the real-time calendar data provided to give accurate, personalized advice.
 `;
 
@@ -170,6 +179,8 @@ Always provide helpful, concise, and actionable responses. Use the real-time cal
         "\n\nNote: Calendar data is not available for this request."
       );
     }
+
+    console.log("CONTET", this.buildCalendarContextSummary(calendarContext))
 
     const contextSummary = this.buildCalendarContextSummary(calendarContext);
     return `${basePrompt}

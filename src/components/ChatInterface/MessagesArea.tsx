@@ -39,7 +39,6 @@ export function MessagesArea({
         <Message
           key={message.id}
           message={message}
-          onSendMessage={onSendMessage}
         />
       ))}
 

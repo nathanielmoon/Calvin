@@ -68,6 +68,7 @@ export function ChatInterface({
           body: JSON.stringify({
             message: content.trim(),
             includeCalendarContext,
+            timestamp: new Date().toISOString(),
             conversationHistory: messages.map((msg) => ({
               id: msg.id,
               role: msg.role,

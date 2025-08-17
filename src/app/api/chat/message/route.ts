@@ -12,6 +12,7 @@ const ChatRequestSchema = z.object({
   message: z.string().min(1).max(2000),
   conversationId: z.string().optional(),
   includeCalendarContext: z.boolean().optional().default(true),
+  timestamp: z.string().optional(),
   conversationHistory: z
     .array(
       z.object({
@@ -75,6 +76,8 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body = await request.json();
     const validatedRequest = ChatRequestSchema.parse(body);
+
+    console.log('Timestamp', validatedRequest.timestamp);
 
     // Initialize AI service
     const aiService = new CalendarAIService();

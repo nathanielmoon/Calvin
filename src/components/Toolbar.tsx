@@ -5,17 +5,13 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Calendar, BarChart3, Plus } from "lucide-react";
 
 interface ToolbarProps {
-  messageCount: number;
   currentView: "chat" | "calendar" | "analytics";
-  onClearHistory: () => void;
   onViewToggle: (view: "chat" | "calendar" | "analytics") => void;
   onNewConversation: () => void;
 }
 
 export function Toolbar({
-  messageCount,
   currentView,
-  onClearHistory,
   onViewToggle,
   onNewConversation,
 }: ToolbarProps) {
