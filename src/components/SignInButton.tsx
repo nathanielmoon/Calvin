@@ -43,7 +43,7 @@ export function SignInButton() {
       variant="ghost"
       size="lg"
       className={cn(
-        "w-full text-lg gap-3 max-w-[400px] h-14 mt-12 bg-white duration-300 z-10 opacity-0 delay-300 animate-fade-in-up",
+        "w-full text-lg gap-3 max-w-[400px] h-14 mt-12 bg-white duration-300 z-10 opacity-0 delay-300 animate-fade-in",
         titleFont.className
       )}
       style={{
