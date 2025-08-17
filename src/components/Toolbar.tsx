@@ -20,7 +20,7 @@ export function Toolbar({
   onNewConversation,
 }: ToolbarProps) {
   return (
-    <div className="flex items-center justify-center px-4">
+    <div className="flex items-center justify-center px-4 shadow-lg sm:shadow-none pb-2">
       <div className="flex flex-row items-center gap-2 w-full max-w-7xl justify-between">
         <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
           <Button

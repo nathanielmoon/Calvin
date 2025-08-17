@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Message } from "./Message";
 import { EmptyState } from "./EmptyState";
 import { LoadingIndicator } from "./LoadingIndicator";
@@ -19,8 +19,18 @@ export function MessagesArea({
   hasSession,
   onSendMessage,
 }: MessagesAreaProps) {
+  useEffect(() => {
+    const messagesContainer = document.getElementById("messages-container");
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }, [messages]);
+
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div
+      id="messages-container"
+      className="flex-1 overflow-y-auto p-4 pt-0 md:pt-4 space-y-4"
+    >
       {messages.length === 0 && (
         <EmptyState hasSession={hasSession} onSendMessage={onSendMessage} />
       )}

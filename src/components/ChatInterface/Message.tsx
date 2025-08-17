@@ -30,13 +30,18 @@ export function Message({ message, onSendMessage }: MessageProps) {
 
       <Card
         className={cn(
-          "max-w-[80%] p-3 gap-2",
+          "max-w-[80%] p-3 gap-2 min-w-[140px]",
           message.role === "user"
             ? "bg-sky-700 text-primary-foreground"
             : "bg-muted"
         )}
       >
-        <div className="text-sm prose prose-sm max-w-none dark:prose-invert">
+        <div
+          className={cn(
+            "text-sm prose prose-sm max-w-none dark:prose-invert",
+            message.role === "user" && "text-right"
+          )}
+        >
           {message.role === "assistant" ? (
             <ReactMarkdown>{message.content}</ReactMarkdown>
           ) : (
@@ -44,7 +49,12 @@ export function Message({ message, onSendMessage }: MessageProps) {
           )}
         </div>
 
-        <div className="flex items-center justify-between border-current/10">
+        <div
+          className={cn(
+            "flex items-center border-current/10",
+            message.role === "user" ? "justify-end" : "justify-start"
+          )}
+        >
           <span className="text-xs opacity-70">
             {new Date(message.timestamp).toLocaleTimeString()}
           </span>

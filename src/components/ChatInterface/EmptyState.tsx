@@ -3,6 +3,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Bot } from "lucide-react";
+import { cn } from "../../lib/utils";
+import { titleFont } from "../../fonts";
 
 interface EmptyStateProps {
   hasSession: boolean;
@@ -26,9 +28,16 @@ export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
       ];
 
   return (
-    <div className="text-center py-12">
+    <div className="text-center">
       <Bot className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-      <h3 className="text-lg font-semibold mb-2">Welcome to Calvin</h3>
+      <h3
+        className={cn(
+          titleFont.className,
+          "text-3xl sm:text-4xl font-semibold mb-2"
+        )}
+      >
+        Welcome to Calvin
+      </h3>
       <p className="text-muted-foreground mb-4">
         Your intelligent calendar assistant. Ask me about your schedule,
         meetings, or time management.
@@ -51,6 +60,7 @@ export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
               className="text-left justify-start h-auto py-2 px-3 whitespace-normal"
               onClick={() => onSendMessage(suggestion)}
             >
+              <span className="mr-1">&gt; </span>
               {suggestion}
             </Button>
           ))}

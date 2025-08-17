@@ -23,7 +23,7 @@ export function ChatInput({
   onKeyDown,
 }: ChatInputProps) {
   return (
-    <div className="p-4 pb-8 md:pb-12 flex flex-row items-center justify-center">
+    <div className="p-8 pb-8 md:pb-12 flex flex-row items-center justify-center">
       <form
         onSubmit={onSubmit}
         className="flex gap-2 relative w-full max-w-4xl"

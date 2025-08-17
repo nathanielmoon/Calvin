@@ -82,13 +82,13 @@ export default function CalendarView() {
         ) : (
           <>
             {view === "day" && (
-              <DayView currentDate={currentDate} events={events} />
+              <DayView currentDate={currentDate} events={[]} />
             )}
             {view === "week" && (
-              <WeekView currentDate={currentDate} events={events} />
+              <WeekView currentDate={currentDate} events={[]} />
             )}
             {view === "month" && (
-              <MonthView currentDate={currentDate} events={events} />
+              <MonthView currentDate={currentDate} events={[]} />
             )}
           </>
         )}

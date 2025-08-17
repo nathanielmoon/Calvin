@@ -1,17 +1,17 @@
-
 import { SignInButton } from "../SignInButton";
 
 import { Title } from "./Title";
-import { CalvinsHead } from "./CalvinsHead";
+import { HeroImage } from "./HeroImage";
 import { SubTitle } from "./SubTitle";
-
+import Header from "../Header";
 
 export default function Landing() {
   return (
-    <div className="p-6 flex items-start justify-center min-h-screen w-screen bg-[#f8f8f8]">
-      <div className="flex flex-col items-center justify-center gap-2 w-full mt-12">
+    <div className="p-2 md:p-6 flex-col items-center justify-start min-h-screen w-screen bg-[#f8f8f8]">
+      <Header />
+      <div className="relative flex flex-col items-center justify-center gap-2 w-full mt-4">
+        <HeroImage />
         <div className="relative flex flex-col items-center justify-center gap-2">
-          <CalvinsHead />
           <Title />
         </div>
         <SubTitle />
