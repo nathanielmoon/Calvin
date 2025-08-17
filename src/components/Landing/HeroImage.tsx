@@ -5,7 +5,7 @@ const styles = {
     "linear-gradient(to bottom, black 0%, transparent 50%, transparent 100%)",
   WebkitMaskImage:
     "linear-gradient(to bottom, black 0%, transparent 50%, transparent 100%)",
-    boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+  boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
 };
 
 export function HeroImage() {
@@ -22,7 +22,8 @@ export function HeroImage() {
           height={800}
           className="w-full max-w-full rounded"
           style={{
-            boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+            boxShadow:
+              "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
           }}
         />
       </div>

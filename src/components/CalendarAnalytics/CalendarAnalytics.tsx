@@ -12,10 +12,15 @@ import { TodaysSummary } from "./TodaysSummary";
 import { TodaysEvents } from "./TodaysEvents";
 import { UpcomingEvents } from "./UpcomingEvents";
 import { WeeklyStats } from "./WeeklyStats";
+import { MeetingHoursChart } from "./MeetingHoursChart";
 import { RefreshButton } from "./RefreshButton";
 import { cn } from "../../lib/utils";
 
-export default function CalendarAnalytics({ className }: { className?: string }) {
+export default function CalendarAnalytics({
+  className,
+}: {
+  className?: string;
+}) {
   const { data: session } = useSession();
   const [todaysEvents, setTodaysEvents] = useState<CalendarEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
@@ -119,6 +124,8 @@ export default function CalendarAnalytics({ className }: { className?: string })
 
         {analytics && <WeeklyStats analytics={analytics} />}
       </div>
+
+      <MeetingHoursChart loading={loading} />
     </div>
   );
 }
