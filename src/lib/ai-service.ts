@@ -193,18 +193,33 @@ Use this real-time data to provide accurate, personalized responses about the us
 
   private buildCalendarContextSummary(context: ChatCalendarContext): string {
     let summary = "";
+    const now = new Date();
+    
+    // Calculate tomorrow's date range
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    const dayAfterTomorrow = new Date(tomorrow);
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 1);
 
     // Today's events
     if (context.eventsToday.length > 0) {
       summary += `TODAY'S SCHEDULE (${context.eventsToday.length} events):\n`;
       context.eventsToday.forEach((event) => {
-        const time = event.start.dateTime
-          ? new Date(event.start.dateTime).toLocaleTimeString("en-US", {
+        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
+        const eventEndTime = event.end?.dateTime ? new Date(event.end.dateTime) : null;
+        
+        // Determine if event has passed
+        const isPast = eventEndTime ? eventEndTime < now : (eventTime && eventTime < now);
+        const status = isPast ? "[DONE]" : "[PENDING]";
+        
+        const time = eventTime
+          ? eventTime.toLocaleTimeString("en-US", {
               hour: "numeric",
               minute: "2-digit",
             })
           : "All day";
-        summary += `- ${time}: ${event.summary}${
+        summary += `- ${status} ${time}: ${event.summary}${
           event.location ? ` (${event.location})` : ""
         }\n`;
       });
@@ -213,23 +228,60 @@ Use this real-time data to provide accurate, personalized responses about the us
       summary += "TODAY: No scheduled events\n\n";
     }
 
-    // Upcoming events
-    if (context.upcomingEvents.length > 0) {
-      summary += `UPCOMING EVENTS (next ${context.upcomingEvents.length}):\n`;
-      context.upcomingEvents.forEach((event) => {
-        const date = event.start.dateTime
-          ? new Date(event.start.dateTime).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-            })
-          : "TBD";
-        const time = event.start.dateTime
-          ? new Date(event.start.dateTime).toLocaleTimeString("en-US", {
+    // Tomorrow's events (filter from upcoming events)
+    const tomorrowEvents = context.upcomingEvents.filter((event) => {
+      const eventDate = event.start.dateTime ? new Date(event.start.dateTime) : null;
+      return eventDate && eventDate >= tomorrow && eventDate < dayAfterTomorrow;
+    });
+    
+    if (tomorrowEvents.length > 0) {
+      summary += `TOMORROW'S SCHEDULE (${tomorrowEvents.length} events):\n`;
+      tomorrowEvents.forEach((event) => {
+        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
+        const time = eventTime
+          ? eventTime.toLocaleTimeString("en-US", {
               hour: "numeric",
               minute: "2-digit",
             })
           : "All day";
-        summary += `- ${date} ${time}: ${event.summary}\n`;
+        summary += `- [PENDING] ${time}: ${event.summary}${
+          event.location ? ` (${event.location})` : ""
+        }\n`;
+      });
+      summary += "\n";
+    } else {
+      summary += "TOMORROW: No scheduled events\n\n";
+    }
+
+    // Remaining upcoming events (after tomorrow)
+    const laterEvents = context.upcomingEvents.filter((event) => {
+      const eventDate = event.start.dateTime ? new Date(event.start.dateTime) : null;
+      return eventDate && eventDate >= dayAfterTomorrow;
+    });
+    
+    if (laterEvents.length > 0) {
+      summary += `UPCOMING EVENTS (after tomorrow):\n`;
+      laterEvents.forEach((event) => {
+        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
+        const eventEndTime = event.end?.dateTime ? new Date(event.end.dateTime) : null;
+        
+        // Determine if event has passed (for edge cases where it might be in upcoming but already done)
+        const isPast = eventEndTime ? eventEndTime < now : (eventTime && eventTime < now);
+        const status = isPast ? "[DONE]" : "[PENDING]";
+        
+        const date = eventTime
+          ? eventTime.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            })
+          : "TBD";
+        const time = eventTime
+          ? eventTime.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+            })
+          : "All day";
+        summary += `- ${status} ${date} ${time}: ${event.summary}\n`;
       });
       summary += "\n";
     }
