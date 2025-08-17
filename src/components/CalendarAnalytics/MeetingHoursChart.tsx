@@ -52,7 +52,7 @@ export function MeetingHoursChart({ loading }: MeetingHoursChartProps) {
 
       if (eventsResponse.ok) {
         const eventsData = await eventsResponse.json();
-        console.log("Events response:", {...eventsData});
+        console.log("Events response:", { ...eventsData });
         const events = eventsData.events ?? [];
 
         // Group events by week and calculate hours
