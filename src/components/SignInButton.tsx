@@ -39,21 +39,21 @@ function GoogleIcon({ className }: { className?: string }) {
 export function SignInButton() {
   return (
     <div className="w-full max-w-[400px] opacity-0 delay-300 animate-fade-in">
-    <Button
-      onClick={() => signIn("google")}
-      variant="ghost"
-      size="lg"
-      className={cn(
-        "w-full text-lg gap-3 h-14 mt-12 bg-white duration-300 z-10 delay-0",
-        titleFont.className
-      )}
-      style={{
-        boxShadow: "rgba(0, 0, 0, 0.05) 0px 14px 20px 0px",
-      }}
-    >
-      <GoogleIcon className="w-5 h-5" />
-      Connect with Google
-    </Button>
+      <Button
+        onClick={() => signIn("google")}
+        variant="ghost"
+        size="lg"
+        className={cn(
+          "w-full text-lg gap-3 h-14 mt-12 bg-white duration-300 z-10 delay-0",
+          titleFont.className
+        )}
+        style={{
+          boxShadow: "rgba(0, 0, 0, 0.05) 0px 14px 20px 0px",
+        }}
+      >
+        <GoogleIcon className="w-5 h-5" />
+        Connect with Google
+      </Button>
     </div>
   );
 }

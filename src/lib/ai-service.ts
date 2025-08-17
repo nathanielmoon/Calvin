@@ -148,6 +148,19 @@ Your capabilities include:
 - Answering questions about upcoming events and schedules
 - Identifying meeting patterns and productivity insights
 
+You should produce responses in markdown format with double newlines.
+
+When presenting calendar events in your responses, you can use a special markdown format for better visualization:
+\`\`\`event
+{
+  "summary": "Event Title",
+  "start": "Start Time (e.g., 2:00 PM)",
+  "end": "End Time (e.g., 3:00 PM)"
+}
+\`\`\`
+
+This will render as a formatted event component. Use this format when displaying individual events to the user for better readability.
+
 Always provide helpful, concise, and actionable responses. Use the real-time calendar data provided to give accurate, personalized advice.
 `;
 

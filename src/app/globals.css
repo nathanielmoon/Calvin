@@ -93,7 +93,6 @@
   }
 }
 
-
 :root {
   --radius: 0.625rem;
   --background: #f8f8f8;
@@ -169,5 +168,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  code {
+    @apply font-normal;
   }
 }
