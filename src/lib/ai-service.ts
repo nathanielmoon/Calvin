@@ -138,8 +138,10 @@ export class CalendarAIService {
     }
   }
 
-  private buildSystemPrompt(calendarContext?: ChatCalendarContext, timestamp?: string): string {
-    
+  private buildSystemPrompt(
+    calendarContext?: ChatCalendarContext,
+    timestamp?: string
+  ): string {
     const basePrompt = `
 ${timestamp ? `The current time is ${timestamp}.` : ""}
 
@@ -180,7 +182,7 @@ Always provide helpful, concise, and actionable responses. Use the real-time cal
       );
     }
 
-    console.log("CONTET", this.buildCalendarContextSummary(calendarContext))
+    console.log("CONTET", this.buildCalendarContextSummary(calendarContext));
 
     const contextSummary = this.buildCalendarContextSummary(calendarContext);
     return `${basePrompt}
@@ -194,7 +196,7 @@ Use this real-time data to provide accurate, personalized responses about the us
   private buildCalendarContextSummary(context: ChatCalendarContext): string {
     let summary = "";
     const now = new Date();
-    
+
     // Calculate tomorrow's date range
     const tomorrow = new Date(now);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -206,13 +208,19 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (context.eventsToday.length > 0) {
       summary += `TODAY'S SCHEDULE (${context.eventsToday.length} events):\n`;
       context.eventsToday.forEach((event) => {
-        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
-        const eventEndTime = event.end?.dateTime ? new Date(event.end.dateTime) : null;
-        
+        const eventTime = event.start.dateTime
+          ? new Date(event.start.dateTime)
+          : null;
+        const eventEndTime = event.end?.dateTime
+          ? new Date(event.end.dateTime)
+          : null;
+
         // Determine if event has passed
-        const isPast = eventEndTime ? eventEndTime < now : (eventTime && eventTime < now);
+        const isPast = eventEndTime
+          ? eventEndTime < now
+          : eventTime && eventTime < now;
         const status = isPast ? "[DONE]" : "[PENDING]";
-        
+
         const time = eventTime
           ? eventTime.toLocaleTimeString("en-US", {
               hour: "numeric",
@@ -230,14 +238,18 @@ Use this real-time data to provide accurate, personalized responses about the us
 
     // Tomorrow's events (filter from upcoming events)
     const tomorrowEvents = context.upcomingEvents.filter((event) => {
-      const eventDate = event.start.dateTime ? new Date(event.start.dateTime) : null;
+      const eventDate = event.start.dateTime
+        ? new Date(event.start.dateTime)
+        : null;
       return eventDate && eventDate >= tomorrow && eventDate < dayAfterTomorrow;
     });
-    
+
     if (tomorrowEvents.length > 0) {
       summary += `TOMORROW'S SCHEDULE (${tomorrowEvents.length} events):\n`;
       tomorrowEvents.forEach((event) => {
-        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
+        const eventTime = event.start.dateTime
+          ? new Date(event.start.dateTime)
+          : null;
         const time = eventTime
           ? eventTime.toLocaleTimeString("en-US", {
               hour: "numeric",
@@ -255,20 +267,28 @@ Use this real-time data to provide accurate, personalized responses about the us
 
     // Remaining upcoming events (after tomorrow)
     const laterEvents = context.upcomingEvents.filter((event) => {
-      const eventDate = event.start.dateTime ? new Date(event.start.dateTime) : null;
+      const eventDate = event.start.dateTime
+        ? new Date(event.start.dateTime)
+        : null;
       return eventDate && eventDate >= dayAfterTomorrow;
     });
-    
+
     if (laterEvents.length > 0) {
       summary += `UPCOMING EVENTS (after tomorrow):\n`;
       laterEvents.forEach((event) => {
-        const eventTime = event.start.dateTime ? new Date(event.start.dateTime) : null;
-        const eventEndTime = event.end?.dateTime ? new Date(event.end.dateTime) : null;
-        
+        const eventTime = event.start.dateTime
+          ? new Date(event.start.dateTime)
+          : null;
+        const eventEndTime = event.end?.dateTime
+          ? new Date(event.end.dateTime)
+          : null;
+
         // Determine if event has passed (for edge cases where it might be in upcoming but already done)
-        const isPast = eventEndTime ? eventEndTime < now : (eventTime && eventTime < now);
+        const isPast = eventEndTime
+          ? eventEndTime < now
+          : eventTime && eventTime < now;
         const status = isPast ? "[DONE]" : "[PENDING]";
-        
+
         const date = eventTime
           ? eventTime.toLocaleDateString("en-US", {
               month: "short",

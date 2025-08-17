@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validatedRequest = ChatRequestSchema.parse(body);
 
-    console.log('Timestamp', validatedRequest.timestamp);
+    console.log("Timestamp", validatedRequest.timestamp);
 
     // Initialize AI service
     const aiService = new CalendarAIService();

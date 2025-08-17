@@ -36,10 +36,7 @@ export function MessagesArea({
       )}
 
       {messages.map((message) => (
-        <Message
-          key={message.id}
-          message={message}
-        />
+        <Message key={message.id} message={message} />
       ))}
 
       {isLoading && <LoadingIndicator />}

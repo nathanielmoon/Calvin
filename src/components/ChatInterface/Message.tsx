@@ -21,9 +21,7 @@ function MarkdownEventComponent({
     <div className="flex flex-col gap-1 bg-gray-200 rounded-lg p-2 font-normal font-sans my-2 min-w-[200px] max-w-[300px] w-full">
       <p className="font-bold break-words whitespace-break-spaces">{summary}</p>
       <div className="flex gap-1 text-sm">
-        <p>{start}</p>
-        -
-        <p>{end}</p>
+        <p>{start}</p>-<p>{end}</p>
       </div>
     </div>
   );
@@ -84,8 +82,13 @@ export function Message({ message }: MessageProps) {
     >
       {message.role === "assistant" && (
         <div className="flex-shrink-0">
-          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-            <Image src="/images/logo.png" alt="Calvin" width={32} height={32} />
+          <div className="w-6 h-6 flex items-center justify-center">
+            <Image
+              src="/images/logo2.png"
+              alt="Calvin"
+              width={32}
+              height={32}
+            />
           </div>
         </div>
       )}
@@ -99,9 +102,7 @@ export function Message({ message }: MessageProps) {
         )}
       >
         <div
-          className={cn(
-            "text-sm prose prose-sm max-w-none dark:prose-invert"
-          )}
+          className={cn("text-sm prose prose-sm max-w-none dark:prose-invert")}
         >
           {message.role === "assistant" ? (
             // @ts-expect-error - This is fine

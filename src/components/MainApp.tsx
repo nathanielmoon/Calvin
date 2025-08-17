@@ -55,7 +55,7 @@ export default function MainApp({ session }: MainAppProps) {
             <ChatInterface
               className="flex-1"
               currentView={currentView}
-              key={ticker}  
+              key={ticker}
             />
           )}
         </ContentContainer>
