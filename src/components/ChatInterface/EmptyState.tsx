@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Bot } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { titleFont } from "../../fonts";
 
@@ -28,8 +27,7 @@ export function EmptyState({ hasSession, onSendMessage }: EmptyStateProps) {
       ];
 
   return (
-    <div className="text-center">
-      <Bot className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+    <div className="text-center mt-6 md:mt-12">
       <h3
         className={cn(
           titleFont.className,

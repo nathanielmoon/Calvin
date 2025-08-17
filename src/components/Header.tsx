@@ -20,7 +20,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onNewConversation }: HeaderProps) {
-  const { data: session, status } = useSession();
+  const sessionResponse = useSession();
 
   return (
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -44,9 +44,9 @@ export default function Header({ onNewConversation }: HeaderProps) {
         {/* Navigation - Keep minimal */}
         <div className="flex items-center gap-4">
           {/* Authentication Section */}
-          {status === "loading" ? (
+          {sessionResponse?.status === "loading" ? (
             <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
-          ) : session && (
+          ) : sessionResponse?.data && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -55,12 +55,12 @@ export default function Header({ onNewConversation }: HeaderProps) {
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={session.user?.image || ""}
-                      alt={session.user?.name || ""}
+                      src={sessionResponse?.data.user?.image || ""}
+                      alt={sessionResponse?.data.user?.name || ""}
                     />
                     <AvatarFallback className="text-xs">
-                      {session.user?.name?.charAt(0) ||
-                        session.user?.email?.charAt(0) ||
+                      {sessionResponse?.data.user?.name?.charAt(0) ||
+                        sessionResponse?.data.user?.email?.charAt(0) ||
                         "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -70,12 +70,12 @@ export default function Header({ onNewConversation }: HeaderProps) {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <div className="flex items-center justify-start gap-2 p-2">
                   <div className="flex flex-col space-y-1 leading-none">
-                    {session.user?.name && (
-                      <p className="font-medium">{session.user.name}</p>
+                    {sessionResponse?.data.user?.name && (
+                      <p className="font-medium">{sessionResponse?.data.user.name}</p>
                     )}
-                    {session.user?.email && (
+                    {sessionResponse?.data.user?.email && (
                       <p className="w-[200px] truncate text-sm text-muted-foreground">
-                        {session.user.email}
+                        {sessionResponse?.data.user.email}
                       </p>
                     )}
                   </div>

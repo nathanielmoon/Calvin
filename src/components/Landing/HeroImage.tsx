@@ -12,7 +12,7 @@ export function HeroImage() {
   return (
     <>
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[800px]"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[1000px] md:max-w-[1200px]"
         style={styles}
       >
         <Image
