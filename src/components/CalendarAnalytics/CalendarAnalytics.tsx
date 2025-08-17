@@ -123,9 +123,9 @@ export default function CalendarAnalytics({
         <UpcomingEvents events={upcomingEvents} loading={loading} />
 
         {analytics && <WeeklyStats analytics={analytics} />}
-      </div>
 
-      <MeetingHoursChart loading={loading} />
+        <MeetingHoursChart loading={loading} />
+      </div>
     </div>
   );
 }

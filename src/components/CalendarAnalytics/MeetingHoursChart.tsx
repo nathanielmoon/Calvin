@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { format, subWeeks, startOfWeek, endOfWeek, parseISO } from "date-fns";
+import { Skeleton } from "../ui/skeleton";
 
 interface WeeklyMeetingHours {
   weekStart: string;
@@ -88,7 +89,7 @@ export function MeetingHoursChart({ loading }: MeetingHoursChartProps) {
             weekStart: weekKey,
             weekEnd: format(weekEndDate, "yyyy-MM-dd"),
             hours: Math.round(hours * 10) / 10, // Round to 1 decimal place
-            displayLabel: `Week of ${format(weekStart, "MMM d")}`,
+            displayLabel: `${format(weekStart, "MMM d")}`,
           });
         }
 
@@ -117,7 +118,7 @@ export function MeetingHoursChart({ loading }: MeetingHoursChartProps) {
   }
 
   return (
-    <Card className="col-span-full">
+    <Card className="md:col-span-2">
       <CardHeader className="pb-2">
         <CardTitle className="text-sm">Weekly Meeting Hours</CardTitle>
         <p className="text-xs text-muted-foreground">
@@ -127,9 +128,7 @@ export function MeetingHoursChart({ loading }: MeetingHoursChartProps) {
       <CardContent>
         {loading || chartLoading ? (
           <div className="h-[200px] flex items-center justify-center">
-            <div className="text-sm text-muted-foreground">
-              Loading chart...
-            </div>
+            <Skeleton className="h-[200px] w-full" />
           </div>
         ) : (
           <ChartContainer config={chartConfig} className="h-[200px] w-full">
