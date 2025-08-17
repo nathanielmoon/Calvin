@@ -31,7 +31,7 @@ export function Message({ message, onSendMessage }: MessageProps) {
 
       <Card
         className={cn(
-          "max-w-[80%] p-3 gap-2 min-w-[140px]",
+          "max-w-[600px] p-3 gap-2 min-w-[140px]",
           message.role === "user"
             ? "bg-sky-700 text-primary-foreground"
             : "bg-muted"

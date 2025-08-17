@@ -48,14 +48,14 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-8 w-8 rounded-full bg-sky-600"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
                         src={sessionResponse?.data.user?.image || ""}
                         alt={sessionResponse?.data.user?.name || ""}
                       />
-                      <AvatarFallback className="text-xs">
+                      <AvatarFallback className="text-xs text-white bg-sky-700">
                         {sessionResponse?.data.user?.name?.charAt(0) ||
                           sessionResponse?.data.user?.email?.charAt(0) ||
                           "U"}

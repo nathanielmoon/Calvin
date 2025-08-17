@@ -29,7 +29,7 @@ export function MessagesArea({
   return (
     <div
       id="messages-container"
-      className="flex-1 overflow-y-auto p-4 pt-0 md:pt-4 space-y-4"
+      className="flex-1 overflow-y-auto p-4 pt-0 sm:pt-8 space-y-4"
     >
       {messages.length === 0 && (
         <EmptyState hasSession={hasSession} onSendMessage={onSendMessage} />
