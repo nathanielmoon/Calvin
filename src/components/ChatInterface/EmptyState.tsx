@@ -10,6 +10,7 @@ const suggestions = [
   "When am I free today?",
   "What's coming up this week?",
   "I have three meetings I need to schedule with Joe, Dan, and Sally. I really want to block my mornings off to work out, so can you write me an email draft I can share with each of them?",
+  "How much of my time am I spending in meetings? How would you recommend I decrease that?",
 ];
 
 interface EmptyStateProps {

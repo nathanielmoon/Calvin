@@ -79,6 +79,7 @@ export default function CalendarAnalytics({
 
   useEffect(() => {
     fetchCalendarData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   if (!session) {

@@ -8,7 +8,6 @@ import { SendHorizonalIcon } from "lucide-react";
 interface ChatInputProps {
   inputMessage: string;
   isLoading: boolean;
-  hasSession: boolean;
   onInputChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
@@ -17,7 +16,6 @@ interface ChatInputProps {
 export function ChatInput({
   inputMessage,
   isLoading,
-  hasSession,
   onInputChange,
   onSubmit,
   onKeyDown,

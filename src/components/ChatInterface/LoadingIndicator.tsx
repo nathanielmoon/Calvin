@@ -2,14 +2,14 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Bot } from "lucide-react";
+import Image from "next/image";
 
 export function LoadingIndicator() {
   return (
     <div className="flex gap-3 justify-start">
       <div className="flex-shrink-0">
-        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-          <Bot className="h-4 w-4 text-primary animate-pulse" />
+        <div className="w-6 h-6 rounded-full flex items-center justify-center">
+          <Image src="/images/logo2.png" alt="Calvin" width={32} height={32} />
         </div>
       </div>
 

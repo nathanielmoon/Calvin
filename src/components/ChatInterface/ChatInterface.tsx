@@ -146,7 +146,6 @@ export function ChatInterface({
           <ChatInput
             inputMessage={inputMessage}
             isLoading={isLoading}
-            hasSession={!!session}
             onInputChange={setInputMessage}
             onSubmit={handleSubmit}
             onKeyDown={handleKeyDown}

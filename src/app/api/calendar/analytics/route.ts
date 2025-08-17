@@ -91,23 +91,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Calendar analytics API error:", error);
-
-    // Handle various authentication errors
-    if (error instanceof Error) {
-      const errorMessage = error.message.toLowerCase();
-      if (
-        errorMessage.includes("invalid_grant") ||
-        errorMessage.includes("invalid authentication credentials") ||
-        errorMessage.includes("expected oauth 2 access token") ||
-        errorMessage.includes("authentication credential")
-      ) {
-        return NextResponse.json(
-          { error: "Authentication expired - Please sign in again" },
-          { status: 401 }
-        );
-      }
-    }
-
     return NextResponse.json(
       { error: "Failed to generate calendar analytics" },
       { status: 500 }
