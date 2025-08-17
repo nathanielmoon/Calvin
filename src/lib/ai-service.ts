@@ -138,7 +138,8 @@ export class CalendarAIService {
   }
 
   private buildSystemPrompt(calendarContext?: ChatCalendarContext): string {
-    const basePrompt = `You are Calvin, an intelligent calendar assistant powered by real-time Google Calendar data. You help users understand their schedule, manage their time, and make informed decisions about their calendar.
+    const basePrompt = `
+You are Calvin, an intelligent calendar assistant powered by real-time Google Calendar data. You help users understand their schedule, manage their time, and make informed decisions about their calendar.
 
 Your capabilities include:
 - Analyzing calendar patterns and meeting load
@@ -147,7 +148,8 @@ Your capabilities include:
 - Answering questions about upcoming events and schedules
 - Identifying meeting patterns and productivity insights
 
-Always provide helpful, concise, and actionable responses. Use the real-time calendar data provided to give accurate, personalized advice.`;
+Always provide helpful, concise, and actionable responses. Use the real-time calendar data provided to give accurate, personalized advice.
+`;
 
     if (!calendarContext) {
       return (

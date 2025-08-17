@@ -38,12 +38,13 @@ function GoogleIcon({ className }: { className?: string }) {
 
 export function SignInButton() {
   return (
+    <div className="w-full max-w-[400px] opacity-0 delay-300 animate-fade-in">
     <Button
       onClick={() => signIn("google")}
       variant="ghost"
       size="lg"
       className={cn(
-        "w-full text-lg gap-3 max-w-[400px] h-14 mt-12 bg-white duration-300 z-10 opacity-0 delay-300 animate-fade-in",
+        "w-full text-lg gap-3 h-14 mt-12 bg-white duration-300 z-10 delay-0",
         titleFont.className
       )}
       style={{
@@ -53,5 +54,6 @@ export function SignInButton() {
       <GoogleIcon className="w-5 h-5" />
       Connect with Google
     </Button>
+    </div>
   );
 }
