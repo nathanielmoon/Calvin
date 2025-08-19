@@ -192,9 +192,8 @@ Always provide helpful, concise, and actionable responses. Use the real-time cal
       );
     }
 
-    console.log("CONTET", this.buildCalendarContextSummary(calendarContext));
-
     const contextSummary = this.buildCalendarContextSummary(calendarContext);
+    console.log("CONTEXT SUMMARY", contextSummary);
     return `${basePrompt}
 
 CURRENT CALENDAR CONTEXT (${calendarContext.lastUpdated}):
@@ -218,16 +217,32 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (context.eventsYesterday && context.eventsYesterday.length > 0) {
       summary += `YESTERDAY'S SCHEDULE (${context.eventsYesterday.length} events):\n`;
       context.eventsYesterday.forEach((event) => {
-        const eventTime = event.start.dateTime
+        const eventStartTime = event.start.dateTime
           ? new Date(event.start.dateTime)
           : null;
-        const time = eventTime
-          ? eventTime.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-            })
-          : "All day";
-        summary += `- [DONE] ${time}: ${event.summary}${
+        const eventEndTime = event.end?.dateTime
+          ? new Date(event.end.dateTime)
+          : null;
+
+        let timeRange = "All day";
+        if (eventStartTime && eventEndTime) {
+          const startTime = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          const endTime = eventEndTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          timeRange = `${startTime} - ${endTime}`;
+        } else if (eventStartTime) {
+          timeRange = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+
+        summary += `- [DONE] ${timeRange}: ${event.summary}${
           event.location ? ` (${event.location})` : ""
         }\n`;
       });
@@ -238,7 +253,7 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (context.eventsToday.length > 0) {
       summary += `TODAY'S SCHEDULE (${context.eventsToday.length} events):\n`;
       context.eventsToday.forEach((event) => {
-        const eventTime = event.start.dateTime
+        const eventStartTime = event.start.dateTime
           ? new Date(event.start.dateTime)
           : null;
         const eventEndTime = event.end?.dateTime
@@ -248,16 +263,28 @@ Use this real-time data to provide accurate, personalized responses about the us
         // Determine if event has passed
         const isPast = eventEndTime
           ? eventEndTime < now
-          : eventTime && eventTime < now;
+          : eventStartTime && eventStartTime < now;
         const status = isPast ? "[DONE]" : "[PENDING]";
 
-        const time = eventTime
-          ? eventTime.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-            })
-          : "All day";
-        summary += `- ${status} ${time}: ${event.summary}${
+        let timeRange = "All day";
+        if (eventStartTime && eventEndTime) {
+          const startTime = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          const endTime = eventEndTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          timeRange = `${startTime} - ${endTime}`;
+        } else if (eventStartTime) {
+          timeRange = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+
+        summary += `- ${status} ${timeRange}: ${event.summary}${
           event.location ? ` (${event.location})` : ""
         }\n`;
       });
@@ -277,16 +304,32 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (tomorrowEvents.length > 0) {
       summary += `TOMORROW'S SCHEDULE (${tomorrowEvents.length} events):\n`;
       tomorrowEvents.forEach((event) => {
-        const eventTime = event.start.dateTime
+        const eventStartTime = event.start.dateTime
           ? new Date(event.start.dateTime)
           : null;
-        const time = eventTime
-          ? eventTime.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-            })
-          : "All day";
-        summary += `- [PENDING] ${time}: ${event.summary}${
+        const eventEndTime = event.end?.dateTime
+          ? new Date(event.end.dateTime)
+          : null;
+
+        let timeRange = "All day";
+        if (eventStartTime && eventEndTime) {
+          const startTime = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          const endTime = eventEndTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          timeRange = `${startTime} - ${endTime}`;
+        } else if (eventStartTime) {
+          timeRange = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+
+        summary += `- [PENDING] ${timeRange}: ${event.summary}${
           event.location ? ` (${event.location})` : ""
         }\n`;
       });
@@ -306,7 +349,7 @@ Use this real-time data to provide accurate, personalized responses about the us
     if (laterEvents.length > 0) {
       summary += `UPCOMING EVENTS (after tomorrow):\n`;
       laterEvents.forEach((event) => {
-        const eventTime = event.start.dateTime
+        const eventStartTime = event.start.dateTime
           ? new Date(event.start.dateTime)
           : null;
         const eventEndTime = event.end?.dateTime
@@ -316,22 +359,35 @@ Use this real-time data to provide accurate, personalized responses about the us
         // Determine if event has passed (for edge cases where it might be in upcoming but already done)
         const isPast = eventEndTime
           ? eventEndTime < now
-          : eventTime && eventTime < now;
+          : eventStartTime && eventStartTime < now;
         const status = isPast ? "[DONE]" : "[PENDING]";
 
-        const date = eventTime
-          ? eventTime.toLocaleDateString("en-US", {
+        const date = eventStartTime
+          ? eventStartTime.toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
             })
           : "TBD";
-        const time = eventTime
-          ? eventTime.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-            })
-          : "All day";
-        summary += `- ${status} ${date} ${time}: ${event.summary}\n`;
+
+        let timeRange = "All day";
+        if (eventStartTime && eventEndTime) {
+          const startTime = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          const endTime = eventEndTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+          timeRange = `${startTime} - ${endTime}`;
+        } else if (eventStartTime) {
+          timeRange = eventStartTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+
+        summary += `- ${status} ${date} ${timeRange}: ${event.summary}\n`;
       });
       summary += "\n";
     }
