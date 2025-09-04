@@ -2,6 +2,17 @@
 
 An intelligent calendar management application that integrates with Google Calendar.
 
+## ⚠️ AI Disclaimer
+
+This application uses artificial intelligence to analyze and provide insights about your calendar events. Please note:
+
+- **AI-generated content may contain inaccuracies** - Always verify important information independently
+- **Recommendations are suggestions only** - Use your own judgment when making scheduling decisions
+- **Data interpretation may vary** - The AI's understanding of context may differ from your intent
+- **Not a substitute for professional advice** - For critical scheduling or time management needs, consult appropriate professionals
+
+By using this application, you acknowledge that AI-generated insights are provided "as-is" and should be used as supplementary information rather than definitive guidance.
+
 ## Getting Started
 
 ### 1. Clone the Repository
