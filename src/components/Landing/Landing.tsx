@@ -1,4 +1,5 @@
 import { SignInButton } from "../SignInButton";
+import { CallButton } from "../CallButton";
 
 import { Title } from "./Title";
 import { HeroImage } from "./HeroImage";
@@ -16,6 +17,7 @@ export default function Landing() {
         </div>
         <SubTitle />
         <SignInButton />
+        <CallButton />
       </div>
     </div>
   );
